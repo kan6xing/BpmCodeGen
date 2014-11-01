@@ -1,0 +1,9 @@
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\BPMCodeGen.exe.config
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\BPMCodeGen.exe
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\BPMCodeGen.pdb
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\obj\Debug\BPMCodeGen.csprojResolveAssemblyReference.cache
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\obj\Debug\BPMCodeGen.Form1.resources
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\obj\Debug\BPMCodeGen.Properties.Resources.resources
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\obj\Debug\BPMCodeGen.csproj.GenerateResource.Cache
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\obj\Debug\BPMCodeGen.exe
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\obj\Debug\BPMCodeGen.pdb
