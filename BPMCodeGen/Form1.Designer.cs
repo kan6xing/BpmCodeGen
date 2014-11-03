@@ -40,6 +40,7 @@
             this.mobComb = new System.Windows.Forms.ComboBox();
             this.richMob = new System.Windows.Forms.RichTextBox();
             this.webB1 = new System.Windows.Forms.WebBrowser();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // label1
@@ -102,7 +103,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 6;
-            this.button2.Text = " 查看效果";
+            this.button2.Text = "生成代码";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -150,11 +151,23 @@
             this.webB1.Size = new System.Drawing.Size(831, 213);
             this.webB1.TabIndex = 11;
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(381, 449);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(41, 12);
+            this.linkLabel1.TabIndex = 12;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "看效果";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1135, 682);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.webB1);
             this.Controls.Add(this.richMob);
             this.Controls.Add(this.mobComb);
@@ -188,6 +201,7 @@
         private System.Windows.Forms.ComboBox mobComb;
         private System.Windows.Forms.RichTextBox richMob;
         private System.Windows.Forms.WebBrowser webB1;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 

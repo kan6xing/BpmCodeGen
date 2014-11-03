@@ -109,19 +109,17 @@ namespace BPMCodeGen
                                 case "$[@tr$]":
                                     //allStr = allStr.Replace(subStr, props[1]+"neibu");
                                     int colCount=1;
-                                    string[] rowsp= props[1].Split(' ');
-                                    colCount=int.Parse(rowsp[0]);
+                                    string[] rowsptop= props[1].Split(' ');
+                                    colCount=int.Parse(rowsptop[0]);
                                     string replaceStr = "";
+                                    string allreplaceStr = "";
 
 
-                                    for (int i = 1; i < rowsp.Count();i++ )
+                                    for (int j= 1; j < rowsptop.Count();j++ )
                                     {
-                                        //string[] rowsppppp = rowsp[i].Split(new string[] { "*" }, StringSplitOptions.RemoveEmptyEntries);
-                                        //for (int i = 0; i < rowsppppp.Count();i++ )
-                                        //{
-
-                                        //}
-
+                                        string[] rowsp = rowsptop[j].Trim().Trim(new Char[]{'\r','\n'}).Split(new string[] { "*" }, StringSplitOptions.RemoveEmptyEntries);
+                                        for (int i = 0; i < rowsp.Count(); i++)
+                                        {
                                             if (rowsp[i].Trim().StartsWith("mb"))
                                             {
                                                 string mbName = rowsp[i].Trim().Substring(0, rowsp[i].IndexOf("["));
@@ -130,7 +128,19 @@ namespace BPMCodeGen
                                                 {
                                                     if (item.Text.Equals(mbName))
                                                     {
-                                                        replaceStr = "<tr>" + item.Value.ToString() + "</tr>";
+                                                        replaceStr =  item.Value.ToString() ;
+                                                        if (rowsp.Count() == 1)
+                                                        {
+                                                            replaceStr = replaceStr.Replace("colspan=\"1\"", "colspan=\"" + colCount + "\"");
+                                                        }else
+                                                        {
+                                                            string colspStr = rowsp[i].Substring(rowsp[i].IndexOf("]")+1);
+                                                            if(!string.IsNullOrEmpty(colspStr))
+                                                            {
+                                                                replaceStr = replaceStr.Replace("colspan=\"1\"", "colspan=\"" + colspStr + "\"");
+                                                            }
+                                                        }
+                                                        
                                                         break;
                                                     }
                                                 }
@@ -138,20 +148,33 @@ namespace BPMCodeGen
                                                 string submb = subStrSE(rowsp[i], "[", "]");
                                                 if (!string.IsNullOrEmpty(submb))
                                                 {
-                                                    string[] ppsub = submb.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-                                                    foreach (string psub in ppsub)
+                                                    if(submb.Contains("->"))
                                                     {
-                                                        string[] psmsubs = psub.Split(new string[] { "->" }, StringSplitOptions.RemoveEmptyEntries);
-                                                        replaceStr = replaceStr.Replace("$[" + psmsubs[0] + "$]", psmsubs[1]);
+                                                        string[] ppsub = submb.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                                                        foreach (string psub in ppsub)
+                                                        {
+                                                            string[] psmsubs = psub.Split(new string[] { "->" }, StringSplitOptions.RemoveEmptyEntries);
+                                                            replaceStr = replaceStr.Replace("$[" + psmsubs[0] + "$]", psmsubs[1]);
+                                                        }
+                                                    }else
+                                                    {
+                                                        replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]",true), submb);
                                                     }
-                                                }else
+                                                    
+                                                }
+                                                else
                                                 {
 
                                                 }
 
                                             }
+                                            allreplaceStr += replaceStr;
+                                        }
+
+                                        allreplaceStr = "<tr>" + allreplaceStr + "</tr>";
+                                            
                                     }
-                                    allStr = allStr.Replace(subStr, replaceStr);
+                                    allStr = allStr.Replace(subStr, allreplaceStr);
                                     break;
                                 default:
                                     break;
@@ -169,6 +192,7 @@ namespace BPMCodeGen
                 TestStr += subStr + "\n";
             }
             this.richTextBox1.Text = allStr;
+            this.webB1.DocumentText = allStr;
 
             //fs.Flush();
             sr.Close();
@@ -182,6 +206,7 @@ namespace BPMCodeGen
             open.Filter = "所有文档(*.*)|*.*";
             if(open.ShowDialog()==DialogResult.OK)
             {
+                this.mobComb.Items.Clear();
                 this.MobTxt.Text = open.FileName;
 
                 FileStream fs = new FileStream(open.FileName, FileMode.Open);
@@ -227,6 +252,11 @@ namespace BPMCodeGen
                 retStr = sourceString.Substring(startInt + startStr.Length, sourceString.IndexOf(endStr, startInt) - startInt-1); 
             }
             return retStr;
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.webB1.DocumentText = this.richTextBox1.Text;
         }
     }
 
