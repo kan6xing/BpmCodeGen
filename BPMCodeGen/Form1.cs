@@ -168,6 +168,62 @@ namespace BPMCodeGen
                                                 }
 
                                             }
+                                            else if (rowsp[i].Trim().StartsWith("mt"))//no start mb
+                                            {
+
+                                            }else
+                                            {
+                                                foreach (ComboBoxItem item in mobComb.Items)
+                                                        {
+                                                            if (item.Text.Equals("mt1"))
+                                                            {
+                                                                replaceStr = item.Value.ToString();
+                                                                break;
+                                                            }
+                                                        }
+
+                                                string endStrrow=rowsp[i].Trim();
+                                                if(rowsp[i].Trim().Length>3)
+                                                endStrrow= rowsp[i].Trim().Substring(rowsp[i].Trim().Length - 3);
+                                                string strStrt = "";
+                                                switch(endStrrow)
+                                                {
+                                                    case "Str":
+                                                        
+                                                        foreach (ComboBoxItem item in mobComb.Items)
+                                                        {
+                                                            if (item.Text.Equals("Str"))
+                                                            {
+                                                                strStrt = item.Value.ToString();
+                                                                break;
+                                                            }
+                                                        }
+
+                                                        strStrt = strStrt.Replace("$[$]", rowsp[i].Trim());
+                                                        replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true),strStrt);
+                                                        break;
+
+                                                    case "Dat":
+                                                        
+                                                        foreach (ComboBoxItem item in mobComb.Items)
+                                                        {
+                                                            if (item.Text.Equals("Dat"))
+                                                            {
+                                                                strStrt = item.Value.ToString();
+                                                                break;
+                                                            }
+                                                        }
+
+                                                        strStrt = strStrt.Replace("$[$]", rowsp[i].Trim());
+                                                        replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), strStrt);
+                                                        break;
+
+                                                    default:
+                                                        
+                                                        replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), rowsp[i].Trim());
+                                                        break;
+                                                }
+                                            }
                                             allreplaceStr += replaceStr;
                                         }
 
