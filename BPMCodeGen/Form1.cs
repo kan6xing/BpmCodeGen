@@ -19,36 +19,37 @@ namespace BPMCodeGen
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
             OpenFileDialog open = new OpenFileDialog();
             //open.Filter = "Word文档(*.doc)|*.doc|其它文档(*.*)|*.*";
             open.Filter = "所有文档(*.*)|*.*";
-            if(open.ShowDialog()==DialogResult.OK)
+            if (open.ShowDialog() == DialogResult.OK)
             {
                 this.textBox1.Text = open.FileName;
                 FileStream fs = new FileStream(open.FileName, FileMode.Open);
-                StreamReader sr = new StreamReader(fs,Encoding.Default);
+                StreamReader sr = new StreamReader(fs, Encoding.Default);
 
                 string allStr = sr.ReadToEnd();
-                int startInt=0;
-                startInt= allStr.IndexOf("$[", startInt);
+                int startInt = 0;
+                startInt = allStr.IndexOf("$[", startInt);
 
                 string TestStr = "";
-                while(startInt>0)
+                while (startInt > 0)
                 {
-                    string subStr= allStr.Substring(startInt, allStr.IndexOf("]", startInt) - startInt+1);
+                    string subStr = allStr.Substring(startInt, allStr.IndexOf("]", startInt) - startInt + 1);
                     //allStr= allStr.Replace(subStr,"字段"+startInt);
-                    startInt = allStr.IndexOf("$[", startInt+1);
-                    
-                    if(string.IsNullOrEmpty(TestStr))
+                    startInt = allStr.IndexOf("$[", startInt + 1);
+
+                    if (string.IsNullOrEmpty(TestStr))
                     {
                         TestStr += subStr + ":\n";
-                    }else
+                    }
+                    else
                     {
-                        TestStr += ";"+subStr + ":\n";
+                        TestStr += ";" + subStr + ":\n";
                     }
                 }
-                this.richTextBox1.Text = TestStr+allStr ;
+                this.richTextBox1.Text = TestStr + allStr;
                 this.richSetup.Text = TestStr.Trim();
                 fs.Flush();
                 sr.Close();
@@ -62,7 +63,7 @@ namespace BPMCodeGen
             sf.Filter = "文本文件|*.txt";
             //sf.FilterIndex=2;
             //sf.RestoreDirectory = true;
-            if(sf.ShowDialog()==DialogResult.OK)
+            if (sf.ShowDialog() == DialogResult.OK)
             {
                 StreamWriter sw = new StreamWriter(sf.FileName, false, Encoding.Default);
                 sw.Write(this.richTextBox1.Text);
@@ -72,11 +73,11 @@ namespace BPMCodeGen
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if(this.richSetup.Text.Trim().Equals(""))
+            if (this.richSetup.Text.Trim().Equals(""))
             {
                 return;
             }
-            if(string.IsNullOrEmpty(this.textBox1.Text.Trim()))
+            if (string.IsNullOrEmpty(this.textBox1.Text.Trim()))
             {
                 MessageBox.Show("请选择一个模板");
                 return;
@@ -94,12 +95,12 @@ namespace BPMCodeGen
             while (startInt > 0)
             {
                 string subStr = allStr.Substring(startInt, allStr.IndexOf("]", startInt) - startInt + 1);
-                
-                string[] strs= this.richSetup.Text.Split(';');
-                foreach(string str in strs)
+
+                string[] strs = this.richSetup.Text.Split(';');
+                foreach (string str in strs)
                 {
-                    string[] props= str.Split(':');
-                    if(subStr.Contains(props[0].Trim().Trim('\n')))
+                    string[] props = str.Split(':');
+                    if (subStr.Contains(props[0].Trim().Trim('\n')))
                     {
 
                         if (subStr.Contains("$[@"))
@@ -108,16 +109,16 @@ namespace BPMCodeGen
                             {
                                 case "$[@tr$]":
                                     //allStr = allStr.Replace(subStr, props[1]+"neibu");
-                                    int colCount=1;
-                                    string[] rowsptop= props[1].Split(' ');
-                                    colCount=int.Parse(rowsptop[0]);
+                                    int colCount = 1;
+                                    string[] rowsptop = props[1].Split(new String[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                                    colCount = int.Parse(rowsptop[0]);
                                     string replaceStr = "";
                                     string allreplaceStr = "";
 
 
-                                    for (int j= 1; j < rowsptop.Count();j++ )
+                                    for (int j = 1; j < rowsptop.Count(); j++)
                                     {
-                                        string[] rowsp = rowsptop[j].Trim().Trim(new Char[]{'\r','\n'}).Split(new string[] { "*" }, StringSplitOptions.RemoveEmptyEntries);
+                                        string[] rowsp = rowsptop[j].Trim().Trim(new Char[] { '\r', '\n' }).Split(new string[] { "*" }, StringSplitOptions.RemoveEmptyEntries);
                                         for (int i = 0; i < rowsp.Count(); i++)
                                         {
                                             if (rowsp[i].Trim().StartsWith("mb"))
@@ -128,19 +129,20 @@ namespace BPMCodeGen
                                                 {
                                                     if (item.Text.Equals(mbName))
                                                     {
-                                                        replaceStr =  item.Value.ToString() ;
+                                                        replaceStr = item.Value.ToString();
                                                         if (rowsp.Count() == 1)
                                                         {
                                                             replaceStr = replaceStr.Replace("colspan=\"1\"", "colspan=\"" + colCount + "\"");
-                                                        }else
+                                                        }
+                                                        else
                                                         {
-                                                            string colspStr = rowsp[i].Substring(rowsp[i].IndexOf("]")+1);
-                                                            if(!string.IsNullOrEmpty(colspStr))
+                                                            string colspStr = rowsp[i].Substring(rowsp[i].IndexOf("]") + 1);
+                                                            if (!string.IsNullOrEmpty(colspStr))
                                                             {
                                                                 replaceStr = replaceStr.Replace("colspan=\"1\"", "colspan=\"" + colspStr + "\"");
                                                             }
                                                         }
-                                                        
+
                                                         break;
                                                     }
                                                 }
@@ -148,7 +150,7 @@ namespace BPMCodeGen
                                                 string submb = subStrSE(rowsp[i], "[", "]");
                                                 if (!string.IsNullOrEmpty(submb))
                                                 {
-                                                    if(submb.Contains("->"))
+                                                    if (submb.Contains("->"))
                                                     {
                                                         string[] ppsub = submb.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
                                                         foreach (string psub in ppsub)
@@ -156,11 +158,12 @@ namespace BPMCodeGen
                                                             string[] psmsubs = psub.Split(new string[] { "->" }, StringSplitOptions.RemoveEmptyEntries);
                                                             replaceStr = replaceStr.Replace("$[" + psmsubs[0] + "$]", psmsubs[1]);
                                                         }
-                                                    }else
-                                                    {
-                                                        replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]",true), submb);
                                                     }
-                                                    
+                                                    else
+                                                    {
+                                                        replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), submb);
+                                                    }
+
                                                 }
                                                 else
                                                 {
@@ -171,25 +174,35 @@ namespace BPMCodeGen
                                             else if (rowsp[i].Trim().StartsWith("mt"))//no start mb
                                             {
 
-                                            }else
+                                            }
+                                            else if (rowsp[i].Trim().StartsWith("tab"))
+                                            {
+
+                                            }
+                                            else
                                             {
                                                 foreach (ComboBoxItem item in mobComb.Items)
-                                                        {
-                                                            if (item.Text.Equals("mt1"))
-                                                            {
-                                                                replaceStr = item.Value.ToString();
-                                                                break;
-                                                            }
-                                                        }
+                                                {
+                                                    if (rowsp.Count() == 1&&item.Text.Equals("mb1"))
+                                                    {
+                                                        replaceStr = item.Value.ToString();
+                                                        break;
+                                                    }
+                                                    else if (rowsp.Count() > 1&&item.Text.Equals("mt1"))
+                                                    {
+                                                        replaceStr = item.Value.ToString();
+                                                        break;
+                                                    }
+                                                }
 
-                                                string endStrrow=rowsp[i].Trim();
-                                                if(rowsp[i].Trim().Length>3)
-                                                endStrrow= rowsp[i].Trim().Substring(rowsp[i].Trim().Length - 3);
+                                                string endStrrow = rowsp[i].Trim();
+                                                if (rowsp[i].Trim().Length > 3)
+                                                    endStrrow = rowsp[i].Trim().Substring(rowsp[i].Trim().Length - 3);
                                                 string strStrt = "";
-                                                switch(endStrrow)
+                                                switch (endStrrow)
                                                 {
                                                     case "Str":
-                                                        
+
                                                         foreach (ComboBoxItem item in mobComb.Items)
                                                         {
                                                             if (item.Text.Equals("Str"))
@@ -200,11 +213,11 @@ namespace BPMCodeGen
                                                         }
 
                                                         strStrt = strStrt.Replace("$[$]", rowsp[i].Trim());
-                                                        replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true),strStrt);
+                                                        replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), strStrt);
                                                         break;
 
                                                     case "Dat":
-                                                        
+
                                                         foreach (ComboBoxItem item in mobComb.Items)
                                                         {
                                                             if (item.Text.Equals("Dat"))
@@ -219,16 +232,41 @@ namespace BPMCodeGen
                                                         break;
 
                                                     default:
-                                                        
+
                                                         replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), rowsp[i].Trim());
                                                         break;
+                                                }
+
+                                                if (rowsp.Count() == 1)
+                                                {
+                                                    replaceStr = replaceStr.Replace("colspan=\"1\"", "colspan=\"" + colCount + "\"");
+                                                }
+                                                else
+                                                {
+                                                    string colspStr = rowsp[i].Substring(rowsp[i].Length - 1);
+                                                    int tempint = 1;
+                                                    if (!string.IsNullOrEmpty(colspStr) && int.TryParse(colspStr, out tempint))
+                                                    {
+                                                        replaceStr = replaceStr.Replace("colspan=\"1\"", "colspan=\"" + colspStr + "\"");
+                                                    }else
+                                                    {
+                                                        if(rowsp[i].Length>4)
+                                                        {
+                                                            string ccStr = rowsp[i].Substring(rowsp[i].Length - 4, 1);
+                                                            if (!string.IsNullOrEmpty(ccStr) && int.TryParse(ccStr, out tempint))
+                                                            {
+                                                                replaceStr = replaceStr.Replace("colspan=\"1\"", "colspan=\"" + ccStr + "\"");
+                                                            }
+                                                        }
+                                                        
+                                                    }
                                                 }
                                             }
                                             allreplaceStr += replaceStr;
                                         }
 
                                         allreplaceStr = "<tr>" + allreplaceStr + "</tr>";
-                                            
+
                                     }
                                     allStr = allStr.Replace(subStr, allreplaceStr);
                                     break;
@@ -238,12 +276,12 @@ namespace BPMCodeGen
                             }
                             break;
                         }
-                        
+
                         allStr = allStr.Replace(subStr, props[1]);
                         break;
                     }
                 }
-                
+
                 startInt = allStr.IndexOf("$[", 0);
                 TestStr += subStr + "\n";
             }
@@ -260,7 +298,7 @@ namespace BPMCodeGen
             OpenFileDialog open = new OpenFileDialog();
             //open.Filter = "Word文档(*.doc)|*.doc|其它文档(*.*)|*.*";
             open.Filter = "所有文档(*.*)|*.*";
-            if(open.ShowDialog()==DialogResult.OK)
+            if (open.ShowDialog() == DialogResult.OK)
             {
                 this.mobComb.Items.Clear();
                 this.MobTxt.Text = open.FileName;
@@ -269,43 +307,48 @@ namespace BPMCodeGen
                 StreamReader sr = new StreamReader(fs, Encoding.Default);
 
                 string allStr = sr.ReadToEnd();
-                string[] comStr= allStr.Split(new string[]{"@@"}, StringSplitOptions.RemoveEmptyEntries);
-                foreach(string coms in comStr)
+                string[] comStr = allStr.Split(new string[] { "@@" }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string coms in comStr)
                 {
-                   
+
                     string[] ccs = coms.Split(new string[] { "::" }, StringSplitOptions.RemoveEmptyEntries);
-                    this.mobComb.Items.Add(new ComboBoxItem(ccs[0].Trim(new Char[]{'\r','\n'}).Trim(),ccs[1]));
+                    this.mobComb.Items.Add(new ComboBoxItem(ccs[0].Trim(new Char[] { '\r', '\n' }).Trim(), ccs[1]));
                 }
 
                 sr.Close();
                 fs.Close();
-                
+
             }
         }
 
         private void mobComb_SelectedValueChanged(object sender, EventArgs e)
         {
             this.richMob.Text = ((ComboBoxItem)this.mobComb.SelectedItem).Value.ToString();
-            if(richMob.Text.Trim().StartsWith("<td"))
+            if (richMob.Text.Trim().StartsWith("<td"))
             {
-                this.webB1.DocumentText = "<table><tr>"+((ComboBoxItem)this.mobComb.SelectedItem).Value.ToString()+"</tr></table>";
+                this.webB1.DocumentText = "<table><tr>" + ((ComboBoxItem)this.mobComb.SelectedItem).Value.ToString() + "</tr></table>";
             }
-            
+            else
+            {
+                this.webB1.DocumentText = ((ComboBoxItem)this.mobComb.SelectedItem).Value.ToString();
+            }
+
         }
 
-        private string subStrSE(string sourceString,string startStr,string endStr,bool isContains=false)
+        private string subStrSE(string sourceString, string startStr, string endStr, bool isContains = false)
         {
-            int startInt=sourceString.IndexOf(startStr);
+            int startInt = sourceString.IndexOf(startStr);
             if ((sourceString.IndexOf(endStr) - startInt) <= 1)
                 return "";
             string retStr = "";
-            if(isContains)
+            if (isContains)
             {
                 retStr = sourceString.Substring(startInt, sourceString.IndexOf(endStr, startInt) - startInt + endStr.Length);
-               
-            }else
+
+            }
+            else
             {
-                retStr = sourceString.Substring(startInt + startStr.Length, sourceString.IndexOf(endStr, startInt) - startInt-1); 
+                retStr = sourceString.Substring(startInt + startStr.Length, sourceString.IndexOf(endStr, startInt) - startInt - 1);
             }
             return retStr;
         }
@@ -316,10 +359,10 @@ namespace BPMCodeGen
         }
     }
 
-    public class ComboBoxItem:IComparable 
+    public class ComboBoxItem : IComparable
     {
-        public ComboBoxItem(){}
-        public ComboBoxItem(string text,string value)
+        public ComboBoxItem() { }
+        public ComboBoxItem(string text, string value)
         {
             this._text = text;
             this._value = value;
@@ -335,7 +378,7 @@ namespace BPMCodeGen
 
         public int CompareTo(object obj)
         {
-            if(obj is ComboBoxItem)
+            if (obj is ComboBoxItem)
             {
                 if (((ComboBoxItem)obj).Text.Equals(this.Text))
                 {
@@ -345,7 +388,8 @@ namespace BPMCodeGen
                 {
                     return ((ComboBoxItem)obj).Text.CompareTo(this.Text);
                 }
-            }else
+            }
+            else
             {
                 if (((string)obj).Equals(this.Text))
                 {
@@ -356,8 +400,8 @@ namespace BPMCodeGen
                     return ((string)obj).CompareTo(this.Text);
                 }
             }
-            
-            
+
+
         }
     }
 }
