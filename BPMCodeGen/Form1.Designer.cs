@@ -41,6 +41,8 @@
             this.richMob = new System.Windows.Forms.RichTextBox();
             this.webB1 = new System.Windows.Forms.WebBrowser();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtParam = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -162,11 +164,31 @@
             this.linkLabel1.Text = "看效果";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(904, 244);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 12);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "参数设置：";
+            // 
+            // txtParam
+            // 
+            this.txtParam.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtParam.Location = new System.Drawing.Point(891, 277);
+            this.txtParam.Multiline = true;
+            this.txtParam.Name = "txtParam";
+            this.txtParam.Size = new System.Drawing.Size(218, 156);
+            this.txtParam.TabIndex = 14;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1135, 682);
+            this.Controls.Add(this.txtParam);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.webB1);
             this.Controls.Add(this.richMob);
@@ -202,6 +224,8 @@
         private System.Windows.Forms.RichTextBox richMob;
         private System.Windows.Forms.WebBrowser webB1;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtParam;
     }
 }
 

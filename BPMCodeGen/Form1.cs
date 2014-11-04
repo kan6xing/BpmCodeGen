@@ -12,9 +12,11 @@ namespace BPMCodeGen
 {
     public partial class Form1 : Form
     {
+        Dictionary<string, string> mbDic = new Dictionary<string, string>();
         public Form1()
         {
             InitializeComponent();
+            this.txtParam.Text = "tabName=CustName\r\ntab1=CustName1";
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -83,6 +85,15 @@ namespace BPMCodeGen
                 return;
             }
 
+            Dictionary<string, string> dicParam = new Dictionary<string, string>();
+            string[] paramStrs= this.txtParam.Text.Split(new String[]{"\r\n"},StringSplitOptions.RemoveEmptyEntries);
+            foreach(string strs in paramStrs)
+            {
+                string[] ss= strs.Trim().Split('=');
+                dicParam.Add(ss[0].Trim(), ss[1].Trim());
+            }
+
+
             string fileName = this.textBox1.Text;
             FileStream fs = new FileStream(fileName, FileMode.Open);
             StreamReader sr = new StreamReader(fs, Encoding.Default);
@@ -114,11 +125,13 @@ namespace BPMCodeGen
                                     colCount = int.Parse(rowsptop[0]);
                                     string replaceStr = "";
                                     string allreplaceStr = "";
+                                    string allreplaceStrS = "";
 
 
                                     for (int j = 1; j < rowsptop.Count(); j++)
                                     {
                                         string[] rowsp = rowsptop[j].Trim().Trim(new Char[] { '\r', '\n' }).Split(new string[] { "*" }, StringSplitOptions.RemoveEmptyEntries);
+                                        allreplaceStr = "";
                                         for (int i = 0; i < rowsp.Count(); i++)
                                         {
                                             if (rowsp[i].Trim().StartsWith("mb"))
@@ -176,7 +189,73 @@ namespace BPMCodeGen
 
                                             }
                                             else if (rowsp[i].Trim().StartsWith("tab"))
-                                            {
+                                            {//**********************    tab1   *********************
+                                                string subTabstr = rowsp[i].Trim().Substring(0, rowsp[i].Trim().IndexOf('['));
+
+                                                
+                                                replaceStr = mbDic["mt1"].Replace("colspan=\"1\"", "colspan=\"" + colCount + "\"");
+                                                replaceStr = replaceStr.Replace("$[col$]", mbDic[subTabstr]);
+                                                
+
+                                                string[] tabStrs = subStrSE(rowsp[i].Trim(), "[", "]").Split(new String[]{">>"},StringSplitOptions.RemoveEmptyEntries);
+                                                string TTrow = "";
+                                                string TTrowS = "";
+                                                for(int x=0;x<tabStrs.Length;x++)
+                                                {
+                                                    TTrow = "";
+                                                    
+                                                    if(x==0)
+                                                    {
+                                                        foreach (string ss in tabStrs[x].Split('-'))
+                                                        {
+                                                            TTrow += mbDic["mt1"].Replace("$[col$]", ss);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        foreach (string ss in tabStrs[x].Split('-'))
+                                                        {
+                                                            string endStrrow = ss.Trim();
+                                                            if (ss.Trim().Length > 3)
+                                                                endStrrow = ss.Trim().Substring(ss.Trim().Length - 3);
+                                                            string strStrt = "";
+                                                            switch (endStrrow)
+                                                            {
+                                                                case "GLO":
+                                                                    TTrow += mbDic["mt1"].Replace("$[col$]", mbDic["GLO"]);
+                                                                    break;
+                                                                case "Str":
+
+                                                                    strStrt = mbDic["Str"];
+
+                                                                    strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss);
+                                                                    //replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), strStrt);
+                                                                    TTrow += mbDic["mt1"].Replace("$[col$]", strStrt);
+                                                                    break;
+
+                                                                case "Dat":
+
+                                                                    strStrt = mbDic["Dat"];
+
+                                                                    strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss);
+                                                                    //replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), strStrt);
+                                                                    TTrow += mbDic["mt1"].Replace("$[col$]", strStrt);
+                                                                    break;
+
+                                                                default:
+
+                                                                    TTrow += mbDic["mt1"].Replace("$[col$]", ss);
+                                                                    break;
+                                                            }
+
+
+                                                        }
+
+                                                    }
+
+                                                    TTrowS += "<tr>" + TTrow + "</tr>";
+                                                }
+                                                replaceStr = replaceStr.Replace("$[$]", TTrowS);
 
                                             }
                                             else
@@ -212,7 +291,7 @@ namespace BPMCodeGen
                                                             }
                                                         }
 
-                                                        strStrt = strStrt.Replace("$[$]", rowsp[i].Trim());
+                                                        strStrt = strStrt.Replace("$[$]", dicParam["tabName"] + "." + rowsp[i].Trim());
                                                         replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), strStrt);
                                                         break;
 
@@ -227,7 +306,7 @@ namespace BPMCodeGen
                                                             }
                                                         }
 
-                                                        strStrt = strStrt.Replace("$[$]", rowsp[i].Trim());
+                                                        strStrt = strStrt.Replace("$[$]", dicParam["tabName"] + "." + rowsp[i].Trim());
                                                         replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), strStrt);
                                                         break;
 
@@ -265,10 +344,10 @@ namespace BPMCodeGen
                                             allreplaceStr += replaceStr;
                                         }
 
-                                        allreplaceStr = "<tr>" + allreplaceStr + "</tr>";
+                                        allreplaceStrS += "<tr>" + allreplaceStr + "</tr>";
 
                                     }
-                                    allStr = allStr.Replace(subStr, allreplaceStr);
+                                    allStr = allStr.Replace(subStr, allreplaceStrS);
                                     break;
                                 default:
                                     break;
@@ -277,6 +356,10 @@ namespace BPMCodeGen
                             break;
                         }
 
+                        if(props[0].Contains("$[#"))
+                        {
+                            allStr = allStr.Replace(subStr,dicParam["tabName"]+"."+ props[1]);
+                        }
                         allStr = allStr.Replace(subStr, props[1]);
                         break;
                     }
@@ -295,6 +378,7 @@ namespace BPMCodeGen
 
         private void mobBtn_Click(object sender, EventArgs e)
         {
+            mbDic.Clear();
             OpenFileDialog open = new OpenFileDialog();
             //open.Filter = "Word文档(*.doc)|*.doc|其它文档(*.*)|*.*";
             open.Filter = "所有文档(*.*)|*.*";
@@ -313,6 +397,7 @@ namespace BPMCodeGen
 
                     string[] ccs = coms.Split(new string[] { "::" }, StringSplitOptions.RemoveEmptyEntries);
                     this.mobComb.Items.Add(new ComboBoxItem(ccs[0].Trim(new Char[] { '\r', '\n' }).Trim(), ccs[1]));
+                    mbDic.Add(ccs[0].Trim(new Char[] { '\r', '\n' }).Trim(), ccs[1]);
                 }
 
                 sr.Close();
