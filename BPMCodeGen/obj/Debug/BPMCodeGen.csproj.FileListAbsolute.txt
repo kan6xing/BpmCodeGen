@@ -7,3 +7,11 @@ d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\obj\Debug\BPMCode
 d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\obj\Debug\BPMCodeGen.csproj.GenerateResource.Cache
 d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\obj\Debug\BPMCodeGen.exe
 d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\obj\Debug\BPMCodeGen.pdb
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\bin\Debug\BPMGEN.accdb
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\mydb\BPMGEN.accdb
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\Maticsoft.DBUtility.dll
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\MySql.Data.dll
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\System.Data.SQLite.dll
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\IBatisNet.DataMapper.dll
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\IBatisNet.Common.dll
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\Maticsoft.DBUtility.pdb

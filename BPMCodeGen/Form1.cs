@@ -19,6 +19,54 @@ namespace BPMCodeGen
         {
             InitializeComponent();
             this.txtParam.Text = "tabName=CustName\r\ntab1=CustName1";
+
+            setAllMob();
+            
+        }
+
+        private void setAllMob()
+        {
+            codes.BPMGen bpmg = new codes.BPMGen();
+            bpmg.GetModel("IDInt>0 order by createDat desc");
+            this.textBox1.Text = bpmg.mobStr;
+            this.richTextBox1.Text = bpmg.docTxt;
+            this.richSetup.Text = bpmg.paramStr;
+            this.txtParam.Text = bpmg.TabStr;
+            this.MobTxt.Text = bpmg.cmobStr;
+
+            string[] paramStrs = this.txtParam.Text.Split(new String[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string strs in paramStrs)
+            {
+                string[] ss = strs.Trim().Split('=');
+                dicParam.Add(ss[0].Trim(), ss[1].Trim());
+            }
+
+            //模板下拉框设置
+            //mbDic.Clear();
+            //this.mobComb.Items.Clear();
+            try
+            {
+                FileStream fs = new FileStream(this.MobTxt.Text, FileMode.Open);
+                StreamReader sr = new StreamReader(fs, Encoding.Default);
+
+                string allStr = sr.ReadToEnd();
+                string[] comStr = allStr.Split(new string[] { "@@" }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string coms in comStr)
+                {
+
+                    string[] ccs = coms.Split(new string[] { "::" }, StringSplitOptions.RemoveEmptyEntries);
+                    this.mobComb.Items.Add(new ComboBoxItem(ccs[0].Trim(new Char[] { '\r', '\n' }).Trim(), ccs[1]));
+                    mbDic.Add(ccs[0].Trim(new Char[] { '\r', '\n' }).Trim(), ccs[1]);
+                }
+
+                sr.Close();
+                fs.Close();
+            }catch(Exception ex)
+            {
+                MessageBox.Show("模板位置异常");
+            }
+            
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -234,7 +282,14 @@ namespace BPMCodeGen
 
 
                                                 replaceStr = mbDic["mt1"].Replace("colspan=\"1\"", "colspan=\"" + colCount + "\"");
-                                                replaceStr = replaceStr.Replace("$[col$]", mbDic[subTabstr]);
+                                                if(mbDic.ContainsKey(subTabstr))
+                                                {
+                                                    replaceStr = replaceStr.Replace("$[col$]", mbDic[subTabstr]);
+                                                }else
+                                                {
+                                                    replaceStr = replaceStr.Replace("$[col$]", mbDic["tab1"]);
+                                                }
+                                                
 
 
                                                 string[] tabStrs = subStrSE(rowsp[i].Trim(), "[", "]").Split(new String[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
@@ -429,6 +484,7 @@ namespace BPMCodeGen
 
         private void mobBtn_Click(object sender, EventArgs e)
         {
+            
             mbDic.Clear();
             OpenFileDialog open = new OpenFileDialog();
             //open.Filter = "Word文档(*.doc)|*.doc|其它文档(*.*)|*.*";
@@ -505,6 +561,19 @@ namespace BPMCodeGen
         private string GetCompStr(string endStrrow, string TTrow, string subTabstr, string ss)
         {
             string strStrt = "";
+
+            //if(subTabstr.IndexOf("tab")>=0)
+            //{
+            //    if (mbDic.ContainsKey(subTabstr))
+            //    {
+                    
+            //    }
+            //    else
+            //    {
+            //        subTabstr = "tab1";
+            //    }
+            //}
+
             switch (endStrrow)
             {
                 case "GLO":
@@ -546,6 +615,46 @@ namespace BPMCodeGen
             }
 
 
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(string.IsNullOrEmpty(this.textBox1.Text)||string.IsNullOrEmpty(this.MobTxt.Text))
+            {
+                return;
+            }
+            DialogResult dr = MessageBox.Show("保存退出", "保存", MessageBoxButtons.YesNoCancel);
+            if(dr==DialogResult.Cancel)
+            {
+                e.Cancel = true;
+            }else if(dr==DialogResult.Yes)
+            {
+                codes.BPMGen bpmg = new codes.BPMGen();
+                if(bpmg.Exists(this.textBox1.Text,this.MobTxt.Text))
+                {
+                    DialogResult drz = MessageBox.Show("有相同的模板记录，要覆盖吗？", "", MessageBoxButtons.YesNoCancel);
+                    if(drz==DialogResult.Yes)
+                    {
+                        bpmg.mobStr = this.textBox1.Text;
+                        bpmg.cmobStr = this.MobTxt.Text;
+                        bpmg.docTxt = this.richTextBox1.Text;
+                        bpmg.TabStr = this.txtParam.Text;
+                        bpmg.paramStr = this.richSetup.Text;
+                        bpmg.Update();
+                    }else
+                    {
+
+                    }
+                }else
+                {
+                    bpmg.mobStr = this.textBox1.Text;
+                    bpmg.cmobStr = this.MobTxt.Text;
+                    bpmg.docTxt = this.richTextBox1.Text;
+                    bpmg.TabStr = this.txtParam.Text;
+                    bpmg.paramStr = this.richSetup.Text;
+                    bpmg.Add();
+                }
+            }
         }
     }
 
