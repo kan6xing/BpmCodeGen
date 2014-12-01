@@ -201,9 +201,9 @@ namespace BPMCodeGen.codes
             strSql.Append("cmobStr=@cmobStr");
             strSql.Append(" where IDInt=@IDInt ");
             OleDbParameter[] parameters = {
-					new OleDbParameter("@docTxt", OleDbType.VarChar,255),
-					new OleDbParameter("@paramStr", OleDbType.VarChar,255),
-					new OleDbParameter("@TabStr", OleDbType.VarChar,255),
+					new OleDbParameter("@docTxt", OleDbType.LongVarChar),
+					new OleDbParameter("@paramStr", OleDbType.LongVarChar),
+					new OleDbParameter("@TabStr", OleDbType.LongVarChar),
 					new OleDbParameter("@mobStr", OleDbType.VarChar,255),
 					new OleDbParameter("@cmobStr", OleDbType.VarChar,255),
 					new OleDbParameter("@IDInt", OleDbType.Integer,4)};
@@ -295,6 +295,53 @@ namespace BPMCodeGen.codes
                 }
             }
         }
+
+        ///// <summary>
+        ///// 得到一个对象实体
+        ///// </summary>
+        //public void GetModel()
+        //{
+        //    StringBuilder strSql = new StringBuilder();
+        //    strSql.Append("select IDInt,docTxt,paramStr,TabStr,mobStr,cmobStr,createDat ");
+        //    strSql.Append(" FROM [BPMGen] ");
+        //    strSql.Append(" where mobStr=@mobStr and cmobStr=@cmobStr  ");
+        //    OleDbParameter[] parameters = {
+        //            new OleDbParameter("@IDInt", OleDbType.Integer,4)};
+        //    parameters[0].Value = IDInt;
+
+        //    DataSet ds = DbHelperOleDb.Query(strSql.ToString(), parameters);
+        //    if (ds.Tables[0].Rows.Count > 0)
+        //    {
+        //        if (ds.Tables[0].Rows[0]["IDInt"] != null && ds.Tables[0].Rows[0]["IDInt"].ToString() != "")
+        //        {
+        //            this.IDInt = int.Parse(ds.Tables[0].Rows[0]["IDInt"].ToString());
+        //        }
+        //        if (ds.Tables[0].Rows[0]["docTxt"] != null)
+        //        {
+        //            this.docTxt = ds.Tables[0].Rows[0]["docTxt"].ToString();
+        //        }
+        //        if (ds.Tables[0].Rows[0]["paramStr"] != null)
+        //        {
+        //            this.paramStr = ds.Tables[0].Rows[0]["paramStr"].ToString();
+        //        }
+        //        if (ds.Tables[0].Rows[0]["TabStr"] != null)
+        //        {
+        //            this.TabStr = ds.Tables[0].Rows[0]["TabStr"].ToString();
+        //        }
+        //        if (ds.Tables[0].Rows[0]["mobStr"] != null)
+        //        {
+        //            this.mobStr = ds.Tables[0].Rows[0]["mobStr"].ToString();
+        //        }
+        //        if (ds.Tables[0].Rows[0]["cmobStr"] != null)
+        //        {
+        //            this.cmobStr = ds.Tables[0].Rows[0]["cmobStr"].ToString();
+        //        }
+        //        if (ds.Tables[0].Rows[0]["createDat"] != null)
+        //        {
+        //            this.createDat = ds.Tables[0].Rows[0]["createDat"].ToString();
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// 得到一个对象实体

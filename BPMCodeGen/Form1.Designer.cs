@@ -43,6 +43,7 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label2 = new System.Windows.Forms.Label();
             this.txtParam = new System.Windows.Forms.TextBox();
+            this.sqlTxt = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -182,11 +183,20 @@
             this.txtParam.Size = new System.Drawing.Size(218, 156);
             this.txtParam.TabIndex = 14;
             // 
+            // sqlTxt
+            // 
+            this.sqlTxt.Location = new System.Drawing.Point(876, 470);
+            this.sqlTxt.Multiline = true;
+            this.sqlTxt.Name = "sqlTxt";
+            this.sqlTxt.Size = new System.Drawing.Size(247, 200);
+            this.sqlTxt.TabIndex = 15;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1135, 682);
+            this.Controls.Add(this.sqlTxt);
             this.Controls.Add(this.txtParam);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.linkLabel1);
@@ -227,6 +237,7 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtParam;
+        private System.Windows.Forms.TextBox sqlTxt;
     }
 }
 

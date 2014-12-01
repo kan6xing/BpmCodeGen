@@ -15,6 +15,8 @@ namespace BPMCodeGen
         Dictionary<string, string> mbDic = new Dictionary<string, string>();//组件字典Str,Dat等
 
         Dictionary<string, string> dicParam = new Dictionary<string, string>();//变量table名称等
+        StringBuilder SQLsb = new StringBuilder();
+        StringBuilder subSQLsb = new StringBuilder();
         public Form1()
         {
             InitializeComponent();
@@ -134,6 +136,12 @@ namespace BPMCodeGen
                 MessageBox.Show("请选择一个模板");
                 return;
             }
+
+            //**************生成Sql********************
+            SQLsb.Clear();
+            SQLsb.Append("create table " + dicParam["tabName"]+" (TaskID int PRIMARY KEY,");
+           
+            
 
 
             dicParam.Clear();
@@ -453,6 +461,8 @@ namespace BPMCodeGen
                                         allreplaceStrS += "<tr>" + allreplaceStr + "</tr>";
 
                                     }
+
+                                    
                                     allStr = allStr.Replace(subStr, allreplaceStrS);
                                     break;
                                 default:
@@ -465,6 +475,7 @@ namespace BPMCodeGen
                         if (props[0].Contains("$[#"))
                         {
                             allStr = allStr.Replace(subStr, dicParam["tabName"] + "." + props[1]);
+                            SQLsb.Append(props[1] + "  nvarchar(Max),");
                         }
                         allStr = allStr.Replace(subStr, props[1]);
                         break;
@@ -474,6 +485,8 @@ namespace BPMCodeGen
                 startInt = allStr.IndexOf("$[", 0);
                 TestStr += subStr + "\n";
             }
+            SQLsb.Remove(SQLsb.Length - 1, 1).Append(")");
+            this.sqlTxt.Text = SQLsb.ToString();
             this.richTextBox1.Text = allStr;
             this.webB1.DocumentText = allStr;
 
@@ -585,6 +598,7 @@ namespace BPMCodeGen
 
                     strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss).Replace("$[id$]", dicParam[subTabstr] + ss);
                     //replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), strStrt);
+                    SQLsb.Append(ss+" nvarchar(MAX),");
                     return TTrow.Replace(subStrSE(TTrow, "$[", "$]", true), strStrt);
                     break;
 
@@ -594,12 +608,15 @@ namespace BPMCodeGen
 
                     strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss).Replace("$[id$]", dicParam[subTabstr] + ss);
                     //replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), strStrt);
+                    SQLsb.Append(ss + " smalldatetime,");
                     return TTrow.Replace(subStrSE(TTrow, "$[", "$]", true), strStrt);
+
                     break;
                 case "Txt":
                     strStrt = mbDic["Txt"];
                     TTrow = mbDic["mt1"];
                     strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss).Replace("$[id$]", dicParam[subTabstr] + ss);
+                    SQLsb.Append(ss + " nvarchar(MAX),");
                     return TTrow.Replace(subStrSE(TTrow, "$[", "$]", true), strStrt);
                     break;
 
@@ -635,6 +652,7 @@ namespace BPMCodeGen
                     DialogResult drz = MessageBox.Show("有相同的模板记录，要覆盖吗？", "", MessageBoxButtons.YesNoCancel);
                     if(drz==DialogResult.Yes)
                     {
+                        bpmg.GetModel("mobStr='"+this.textBox1.Text+"' and cmobStr='"+this.MobTxt.Text+"'");
                         bpmg.mobStr = this.textBox1.Text;
                         bpmg.cmobStr = this.MobTxt.Text;
                         bpmg.docTxt = this.richTextBox1.Text;
