@@ -12,6 +12,7 @@ namespace BPMCodeGen
 {
     public partial class Form1 : Form
     {
+        codes.BPMGen bpmg = new codes.BPMGen();
         Dictionary<string, string> mbDic = new Dictionary<string, string>();//组件字典Str,Dat等
 
         Dictionary<string, string> dicParam = new Dictionary<string, string>();//变量table名称等
@@ -28,7 +29,7 @@ namespace BPMCodeGen
 
         private void setAllMob()
         {
-            codes.BPMGen bpmg = new codes.BPMGen();
+            
             bpmg.GetModel("IDInt>0 order by createDat desc");
             this.textBox1.Text = bpmg.mobStr;
             this.richTextBox1.Text = bpmg.docTxt;
@@ -646,32 +647,76 @@ namespace BPMCodeGen
                 e.Cancel = true;
             }else if(dr==DialogResult.Yes)
             {
-                codes.BPMGen bpmg = new codes.BPMGen();
-                if(bpmg.Exists(this.textBox1.Text,this.MobTxt.Text))
-                {
-                    DialogResult drz = MessageBox.Show("有相同的模板记录，要覆盖吗？", "", MessageBoxButtons.YesNoCancel);
-                    if(drz==DialogResult.Yes)
-                    {
-                        bpmg.GetModel("mobStr='"+this.textBox1.Text+"' and cmobStr='"+this.MobTxt.Text+"'");
-                        bpmg.mobStr = this.textBox1.Text;
-                        bpmg.cmobStr = this.MobTxt.Text;
-                        bpmg.docTxt = this.richTextBox1.Text;
-                        bpmg.TabStr = this.txtParam.Text;
-                        bpmg.paramStr = this.richSetup.Text;
-                        bpmg.Update();
-                    }else
-                    {
+                savetoDB();
+                //codes.BPMGen bpmg = new codes.BPMGen();
+                //if(bpmg.Exists(this.textBox1.Text,this.MobTxt.Text))
+                //{
+                    //DialogResult drz = MessageBox.Show("要覆盖吗？（是-覆盖，否-新增，取消-不保存）", "", MessageBoxButtons.YesNoCancel);
+                    //if(drz==DialogResult.Yes)
+                    //{
+                    //    //bpmg.GetModel("mobStr='"+this.textBox1.Text+"' and cmobStr='"+this.MobTxt.Text+"'");
+                    //    bpmg.mobStr = this.textBox1.Text;
+                    //    bpmg.cmobStr = this.MobTxt.Text;
+                    //    bpmg.docTxt = this.richTextBox1.Text;
+                    //    bpmg.TabStr = this.txtParam.Text;
+                    //    bpmg.paramStr = this.richSetup.Text;
+                    //    bpmg.Update();
+                    //}
+                    //else if (drz == DialogResult.No)
+                    //{
+                    //    bpmg.mobStr = this.textBox1.Text;
+                    //    bpmg.cmobStr = this.MobTxt.Text;
+                    //    bpmg.docTxt = this.richTextBox1.Text;
+                    //    bpmg.TabStr = this.txtParam.Text;
+                    //    bpmg.paramStr = this.richSetup.Text;
+                    //    bpmg.Add();
+                    //}else
+                    //{
+                    //    //不保存
+                    //}
+                //}else
+                //{
+                //    bpmg.mobStr = this.textBox1.Text;
+                //    bpmg.cmobStr = this.MobTxt.Text;
+                //    bpmg.docTxt = this.richTextBox1.Text;
+                //    bpmg.TabStr = this.txtParam.Text;
+                //    bpmg.paramStr = this.richSetup.Text;
+                //    bpmg.Add();
+                //}
+            }
+        }
 
-                    }
-                }else
-                {
-                    bpmg.mobStr = this.textBox1.Text;
-                    bpmg.cmobStr = this.MobTxt.Text;
-                    bpmg.docTxt = this.richTextBox1.Text;
-                    bpmg.TabStr = this.txtParam.Text;
-                    bpmg.paramStr = this.richSetup.Text;
-                    bpmg.Add();
-                }
+        private void savedbBtn_Click(object sender, EventArgs e)
+        {
+            savetoDB();
+        }
+
+        private void savetoDB()
+        {
+            DialogResult drz = MessageBox.Show("要覆盖吗？（是-覆盖，否-新增，取消-不保存）", "", MessageBoxButtons.YesNoCancel);
+            if (drz == DialogResult.Yes)
+            {
+                //bpmg.GetModel("mobStr='"+this.textBox1.Text+"' and cmobStr='"+this.MobTxt.Text+"'");
+                bpmg.mobStr = this.textBox1.Text;
+                bpmg.cmobStr = this.MobTxt.Text;
+                bpmg.docTxt = this.richTextBox1.Text;
+                bpmg.TabStr = this.txtParam.Text;
+                bpmg.paramStr = this.richSetup.Text;
+                bpmg.Update();
+            }
+            else if (drz == DialogResult.No)
+            {
+                bpmg.mobStr = this.textBox1.Text;
+                bpmg.cmobStr = this.MobTxt.Text;
+                bpmg.docTxt = this.richTextBox1.Text;
+                bpmg.TabStr = this.txtParam.Text;
+                bpmg.paramStr = this.richSetup.Text;
+                bpmg.Add();
+                bpmg.GetModel("IDInt>0 order by createDat desc");
+            }
+            else
+            {
+                //不保存
             }
         }
     }

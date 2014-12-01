@@ -44,6 +44,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtParam = new System.Windows.Forms.TextBox();
             this.sqlTxt = new System.Windows.Forms.TextBox();
+            this.savedbBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -191,11 +192,22 @@
             this.sqlTxt.Size = new System.Drawing.Size(247, 200);
             this.sqlTxt.TabIndex = 15;
             // 
+            // savedbBtn
+            // 
+            this.savedbBtn.Location = new System.Drawing.Point(978, 22);
+            this.savedbBtn.Name = "savedbBtn";
+            this.savedbBtn.Size = new System.Drawing.Size(75, 23);
+            this.savedbBtn.TabIndex = 16;
+            this.savedbBtn.Text = "保存(&S)";
+            this.savedbBtn.UseVisualStyleBackColor = true;
+            this.savedbBtn.Click += new System.EventHandler(this.savedbBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1135, 682);
+            this.Controls.Add(this.savedbBtn);
             this.Controls.Add(this.sqlTxt);
             this.Controls.Add(this.txtParam);
             this.Controls.Add(this.label2);
@@ -238,6 +250,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtParam;
         private System.Windows.Forms.TextBox sqlTxt;
+        private System.Windows.Forms.Button savedbBtn;
     }
 }
 
