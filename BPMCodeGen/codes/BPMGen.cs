@@ -212,7 +212,7 @@ namespace BPMCodeGen.codes
             strSql.Append("paramStr=@paramStr,");
             strSql.Append("TabStr=@TabStr,");
             strSql.Append("mobStr=@mobStr,");
-            strSql.Append("createDat=Date(),");
+            strSql.Append("createDat=Now(),");
             strSql.Append("cmobStr=@cmobStr,");
             strSql.Append("NameStr=@NameStr");
             strSql.Append(" where IDInt=@IDInt ");

@@ -17,7 +17,7 @@ namespace BPMCodeGen
         {
             InitializeComponent();
             codes.BPMGen bpm = new codes.BPMGen();
-            this.dataGridView1.DataSource= bpm.GetList("1=1").Tables[0];
+            this.dataGridView1.DataSource = bpm.GetList("1=1 order by createDat desc").Tables[0];
             
         }
 
@@ -36,20 +36,21 @@ namespace BPMCodeGen
             codes.BPMGen bpm = new codes.BPMGen();
             if (this.dataGridView1.SelectedRows.Count > 0)
             {
-                
-                foreach (DataGridViewRow dr in dataGridView1.SelectedRows)
+                DialogResult drr = MessageBox.Show("确定要删除吗？","删除",MessageBoxButtons.OKCancel);
+                if(drr==DialogResult.OK)
                 {
-                    if (dr.IsNewRow)
+                    foreach (DataGridViewRow dr in dataGridView1.SelectedRows)
                     {
-                        continue;
+                        if (dr.IsNewRow)
+                        {
+                            continue;
+                        }
+                        bpm.Delete(int.Parse(dataGridView1.SelectedRows[0].Cells["IDInt"].Value.ToString()));
                     }
-                    bpm.Delete(int.Parse(dataGridView1.SelectedRows[0].Cells["IDInt"].Value.ToString()));
                 }
-                
-                
             }
             
-            this.dataGridView1.DataSource = bpm.GetList("1=1").Tables[0];
+            this.dataGridView1.DataSource = bpm.GetList("1=1 order by createDat desc").Tables[0];
         }
 
     }
