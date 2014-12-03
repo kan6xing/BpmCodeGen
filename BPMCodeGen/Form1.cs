@@ -27,10 +27,18 @@ namespace BPMCodeGen
             
         }
 
-        private void setAllMob()
+        private void setAllMob(int id=0)
         {
-            
-            bpmg.GetModel("IDInt>0 order by createDat desc");
+            if(id>0)
+            { bpmg.GetModel(id); }
+            else
+            {
+                bpmg.GetModel("IDInt>0 order by createDat desc");
+            }
+            dicParam.Clear();
+            mbDic.Clear();
+            this.mobComb.Items.Clear();
+
             this.textBox1.Text = bpmg.mobStr;
             this.richTextBox1.Text = bpmg.docTxt;
             this.richSetup.Text = bpmg.paramStr;
@@ -626,6 +634,15 @@ namespace BPMCodeGen
                     {//扩展不用改代码
                         strStrt = mbDic[endStrrow];
                         strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss).Replace("$[id$]", dicParam[subTabstr] + ss);
+                        switch(endStrrow)
+                        {
+                            case "Int":
+                                SQLsb.Append(ss + " int,");
+                                break;
+                            case "Dec":
+                                SQLsb.Append(ss + " decimal(18,2),");
+                                break;
+                        }
                         return TTrow.Replace(subStrSE(TTrow, "$[", "$]", true), strStrt);
                     }
                     return TTrow.Replace(subStrSE(TTrow, "$[", "$]", true), ss);
@@ -693,7 +710,18 @@ namespace BPMCodeGen
 
         private void savetoDB()
         {
-            DialogResult drz = MessageBox.Show("要覆盖吗？（是-覆盖，否-新增，取消-不保存）", "", MessageBoxButtons.YesNoCancel);
+            DialogResult drz;
+            string titleName=subStrSE(this.richSetup.Text, ":", "\n").Trim();
+            if(titleName.Equals(bpmg.NameStr))
+            {
+                drz = MessageBox.Show("要覆盖吗？（是-覆盖，否-新增，取消-不保存）", "", MessageBoxButtons.YesNoCancel);
+                
+            }else
+            {
+                drz = MessageBox.Show("注意标题不一样!\n 要覆盖吗？（是-覆盖，否-新增，取消-不保存）", "注意", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                
+            }
+            
             if (drz == DialogResult.Yes)
             {
                 //bpmg.GetModel("mobStr='"+this.textBox1.Text+"' and cmobStr='"+this.MobTxt.Text+"'");
@@ -702,6 +730,7 @@ namespace BPMCodeGen
                 bpmg.docTxt = this.richTextBox1.Text;
                 bpmg.TabStr = this.txtParam.Text;
                 bpmg.paramStr = this.richSetup.Text;
+                bpmg.NameStr = titleName;
                 bpmg.Update();
             }
             else if (drz == DialogResult.No)
@@ -711,6 +740,7 @@ namespace BPMCodeGen
                 bpmg.docTxt = this.richTextBox1.Text;
                 bpmg.TabStr = this.txtParam.Text;
                 bpmg.paramStr = this.richSetup.Text;
+                bpmg.NameStr = titleName;
                 bpmg.Add();
                 bpmg.GetModel("IDInt>0 order by createDat desc");
             }
@@ -718,6 +748,17 @@ namespace BPMCodeGen
             {
                 //不保存
             }
+        }
+
+        private void 历史仓库ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            historyWin hist = new historyWin();
+            hist.ShowDialog();
+            if(hist.idInt>0)
+            {
+                setAllMob(hist.idInt);
+            }
+            //MessageBox.Show("aaaaaa");
         }
     }
 

@@ -45,6 +45,9 @@
             this.txtParam = new System.Windows.Forms.TextBox();
             this.sqlTxt = new System.Windows.Forms.TextBox();
             this.savedbBtn = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.历史仓库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -202,6 +205,23 @@
             this.savedbBtn.UseVisualStyleBackColor = true;
             this.savedbBtn.Click += new System.EventHandler(this.savedbBtn_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.历史仓库ToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1135, 25);
+            this.menuStrip1.TabIndex = 17;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // 历史仓库ToolStripMenuItem
+            // 
+            this.历史仓库ToolStripMenuItem.Name = "历史仓库ToolStripMenuItem";
+            this.历史仓库ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.历史仓库ToolStripMenuItem.Text = "历史仓库";
+            this.历史仓库ToolStripMenuItem.Click += new System.EventHandler(this.历史仓库ToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -224,9 +244,13 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -251,6 +275,8 @@
         private System.Windows.Forms.TextBox txtParam;
         private System.Windows.Forms.TextBox sqlTxt;
         private System.Windows.Forms.Button savedbBtn;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 历史仓库ToolStripMenuItem;
     }
 }
 

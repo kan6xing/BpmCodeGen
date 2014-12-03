@@ -15,3 +15,4 @@ d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\System.
 d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\IBatisNet.DataMapper.dll
 d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\IBatisNet.Common.dll
 d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\bin\Debug\Maticsoft.DBUtility.pdb
+d:\documents\visual studio 2013\Projects\BPMCodeGen\BPMCodeGen\obj\Debug\BPMCodeGen.historyWin.resources

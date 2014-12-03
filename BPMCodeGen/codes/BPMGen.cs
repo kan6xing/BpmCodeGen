@@ -21,6 +21,7 @@ namespace BPMCodeGen.codes
         private string _mobstr;
         private string _cmobstr;
         private DateTime _createDat;
+        private string _NameStr;
         /// <summary>
         /// 
         /// </summary>
@@ -73,7 +74,13 @@ namespace BPMCodeGen.codes
         /// <summary>
         /// 创建日期
         /// </summary>
-        public string createDat
+        public DateTime createDat
+        {
+            get;
+            set;
+        }
+
+        public string NameStr
         {
             get;
             set;
@@ -89,7 +96,7 @@ namespace BPMCodeGen.codes
         public BPMGen(int IDInt)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select IDInt,docTxt,paramStr,TabStr,mobStr,cmobStr,createDat ");
+            strSql.Append("select IDInt,docTxt,paramStr,TabStr,mobStr,cmobStr,createDat,NameStr ");
             strSql.Append(" FROM [BPMGen] ");
             strSql.Append(" where IDInt=@IDInt ");
             OleDbParameter[] parameters = {
@@ -125,7 +132,11 @@ namespace BPMCodeGen.codes
                 }
                 if (ds.Tables[0].Rows[0]["createDat"] != null)
                 {
-                    this.createDat = ds.Tables[0].Rows[0]["createDat"].ToString();
+                    this.createDat = DateTime.Parse(ds.Tables[0].Rows[0]["createDat"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["NameStr"] != null)
+                {
+                    this.NameStr = ds.Tables[0].Rows[0]["NameStr"].ToString();
                 }
             }
         }
@@ -148,17 +159,19 @@ namespace BPMCodeGen.codes
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(string mobStr, string cmobStr)
+        public bool Exists(string mobStr, string cmobStr, string NameStr)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select count(1) from [BPMGen]");
-            strSql.Append(" where mobStr=@mobStr and cmobStr=@cmobStr");
+            strSql.Append(" where mobStr=@mobStr and cmobStr=@cmobStr and NameStr=@NameStr");
 
             OleDbParameter[] parameters = {
 					new OleDbParameter("@mobStr", OleDbType.VarWChar,255),
+                    new OleDbParameter("@NameStr", OleDbType.VarWChar,255),
                     new OleDbParameter("@cmobStr", OleDbType.VarWChar,255)};
             parameters[0].Value = mobStr;
             parameters[1].Value = cmobStr;
+            parameters[2].Value = NameStr;
             return DbHelperOleDb.Exists(strSql.ToString(), parameters);
         }
 
@@ -169,20 +182,22 @@ namespace BPMCodeGen.codes
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [BPMGen] (");
-            strSql.Append("docTxt,paramStr,TabStr,mobStr,cmobStr)");
+            strSql.Append("docTxt,paramStr,TabStr,mobStr,cmobStr,NameStr)");
             strSql.Append(" values (");
-            strSql.Append("@docTxt,@paramStr,@TabStr,@mobStr,@cmobStr)");
+            strSql.Append("@docTxt,@paramStr,@TabStr,@mobStr,@cmobStr,@NameStr)");
             OleDbParameter[] parameters = {
 					new OleDbParameter("@docTxt", OleDbType.LongVarChar),
 					new OleDbParameter("@paramStr", OleDbType.LongVarChar),
 					new OleDbParameter("@TabStr", OleDbType.LongVarChar),
 					new OleDbParameter("@mobStr", OleDbType.VarChar,255),
-					new OleDbParameter("@cmobStr", OleDbType.VarChar,255)};
+					new OleDbParameter("@cmobStr", OleDbType.VarChar,255),
+                    new OleDbParameter("@NameStr", OleDbType.VarChar,255)};
             parameters[0].Value = docTxt;
             parameters[1].Value = paramStr;
             parameters[2].Value = TabStr;
             parameters[3].Value = mobStr;
             parameters[4].Value = cmobStr;
+            parameters[5].Value = NameStr;
 
             DbHelperOleDb.ExecuteSql(strSql.ToString(), parameters);
         }
@@ -198,7 +213,8 @@ namespace BPMCodeGen.codes
             strSql.Append("TabStr=@TabStr,");
             strSql.Append("mobStr=@mobStr,");
             strSql.Append("createDat=Date(),");
-            strSql.Append("cmobStr=@cmobStr");
+            strSql.Append("cmobStr=@cmobStr,");
+            strSql.Append("NameStr=@NameStr");
             strSql.Append(" where IDInt=@IDInt ");
             OleDbParameter[] parameters = {
 					new OleDbParameter("@docTxt", OleDbType.LongVarChar),
@@ -206,13 +222,15 @@ namespace BPMCodeGen.codes
 					new OleDbParameter("@TabStr", OleDbType.LongVarChar),
 					new OleDbParameter("@mobStr", OleDbType.VarChar,255),
 					new OleDbParameter("@cmobStr", OleDbType.VarChar,255),
+					new OleDbParameter("@NameStr", OleDbType.VarChar,255),
 					new OleDbParameter("@IDInt", OleDbType.Integer,4)};
             parameters[0].Value = docTxt;
             parameters[1].Value = paramStr;
             parameters[2].Value = TabStr;
             parameters[3].Value = mobStr;
             parameters[4].Value = cmobStr;
-            parameters[5].Value = IDInt;
+            parameters[5].Value = NameStr;
+            parameters[6].Value = IDInt;
 
             int rows = DbHelperOleDb.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -255,7 +273,7 @@ namespace BPMCodeGen.codes
         public void GetModel(int IDInt)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select IDInt,docTxt,paramStr,TabStr,mobStr,cmobStr,createDat ");
+            strSql.Append("select IDInt,docTxt,paramStr,TabStr,mobStr,cmobStr,createDat,NameStr ");
             strSql.Append(" FROM [BPMGen] ");
             strSql.Append(" where IDInt=@IDInt ");
             OleDbParameter[] parameters = {
@@ -285,13 +303,18 @@ namespace BPMCodeGen.codes
                 {
                     this.mobStr = ds.Tables[0].Rows[0]["mobStr"].ToString();
                 }
+                if (ds.Tables[0].Rows[0]["NameStr"] != null)
+                {
+                    this.NameStr = ds.Tables[0].Rows[0]["NameStr"].ToString();
+                }
                 if (ds.Tables[0].Rows[0]["cmobStr"] != null)
                 {
                     this.cmobStr = ds.Tables[0].Rows[0]["cmobStr"].ToString();
                 }
+
                 if (ds.Tables[0].Rows[0]["createDat"] != null)
                 {
-                    this.createDat = ds.Tables[0].Rows[0]["createDat"].ToString();
+                    this.createDat = DateTime.Parse( ds.Tables[0].Rows[0]["createDat"].ToString());
                 }
             }
         }
@@ -349,7 +372,7 @@ namespace BPMCodeGen.codes
         public void GetModel(string whereStr)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select IDInt,docTxt,paramStr,TabStr,mobStr,cmobStr,createDat ");
+            strSql.Append("select IDInt,docTxt,paramStr,TabStr,mobStr,cmobStr,createDat,NameStr ");
             strSql.Append(" FROM [BPMGen] ");
             strSql.Append(" where "+whereStr);
             
@@ -381,9 +404,13 @@ namespace BPMCodeGen.codes
                 {
                     this.cmobStr = ds.Tables[0].Rows[0]["cmobStr"].ToString();
                 }
+                if (ds.Tables[0].Rows[0]["NameStr"] != null)
+                {
+                    this.NameStr = ds.Tables[0].Rows[0]["NameStr"].ToString();
+                }
                 if (ds.Tables[0].Rows[0]["createDat"] != null)
                 {
-                    this.createDat = ds.Tables[0].Rows[0]["createDat"].ToString();
+                    this.createDat =DateTime.Parse( ds.Tables[0].Rows[0]["createDat"].ToString());
                 }
             }
         }
