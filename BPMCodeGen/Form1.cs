@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections;
 namespace BPMCodeGen
 {
     public partial class Form1 : Form
@@ -18,6 +19,9 @@ namespace BPMCodeGen
         Dictionary<string, string> dicParam = new Dictionary<string, string>();//变量table名称等
         StringBuilder SQLsb = new StringBuilder();
         StringBuilder subSQLsb = new StringBuilder();
+
+        ArrayList alist = new ArrayList();
+        
         public Form1()
         {
             InitializeComponent();
@@ -148,6 +152,7 @@ namespace BPMCodeGen
 
             //**************生成Sql********************
             SQLsb.Clear();
+            alist.Clear();
             SQLsb.Append("create table " + dicParam["tabName"]+" (TaskID int PRIMARY KEY,");
            
             
@@ -485,6 +490,7 @@ namespace BPMCodeGen
                         {
                             allStr = allStr.Replace(subStr, dicParam["tabName"] + "." + props[1]);
                             SQLsb.Append(props[1] + "  nvarchar(Max),");
+                            alist.Add(props[1]);
                         }
                         allStr = allStr.Replace(subStr, props[1]);
                         break;
@@ -499,6 +505,12 @@ namespace BPMCodeGen
             this.richTextBox1.Text = allStr;
             this.webB1.DocumentText = allStr;
 
+            string allField = "";
+            foreach(string s in alist)
+            {
+                allField += s + "--";
+            }
+            this.textBox4.Text = allField;
             //fs.Flush();
             sr.Close();
             fs.Close();
@@ -608,6 +620,7 @@ namespace BPMCodeGen
                     strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss).Replace("$[id$]", dicParam[subTabstr] + ss);
                     //replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), strStrt);
                     SQLsb.Append(ss+" nvarchar(MAX),");
+                    alist.Add(ss);
                     return TTrow.Replace(subStrSE(TTrow, "$[", "$]", true), strStrt);
                     break;
 
@@ -618,6 +631,7 @@ namespace BPMCodeGen
                     strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss).Replace("$[id$]", dicParam[subTabstr] + ss);
                     //replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), strStrt);
                     SQLsb.Append(ss + " smalldatetime,");
+                    alist.Add(ss);
                     return TTrow.Replace(subStrSE(TTrow, "$[", "$]", true), strStrt);
 
                     break;
@@ -626,6 +640,7 @@ namespace BPMCodeGen
                     TTrow = mbDic["mt1"];
                     strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss).Replace("$[id$]", dicParam[subTabstr] + ss);
                     SQLsb.Append(ss + " nvarchar(MAX),");
+                    alist.Add(ss);
                     return TTrow.Replace(subStrSE(TTrow, "$[", "$]", true), strStrt);
                     break;
 
@@ -638,9 +653,11 @@ namespace BPMCodeGen
                         {
                             case "Int":
                                 SQLsb.Append(ss + " int,");
+                                alist.Add(ss);
                                 break;
                             case "Dec":
                                 SQLsb.Append(ss + " decimal(18,2),");
+                                alist.Add(ss);
                                 break;
                         }
                         return TTrow.Replace(subStrSE(TTrow, "$[", "$]", true), strStrt);
@@ -759,6 +776,459 @@ namespace BPMCodeGen
                 setAllMob(hist.idInt);
             }
             //MessageBox.Show("aaaaaa");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            //open.Filter = "Word文档(*.doc)|*.doc|其它文档(*.*)|*.*";
+            open.Filter = "所有文档(*.*)|*.*";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                this.textBox2.Text = open.FileName;
+                FileStream fs = new FileStream(open.FileName, FileMode.Open);
+                StreamReader sr = new StreamReader(fs, Encoding.Default);
+
+                string allStr = sr.ReadToEnd();
+                int startInt = 0;
+                startInt = allStr.IndexOf("$[", startInt);
+
+                string TestStr = "";
+                while (startInt > 0)
+                {
+                    string subStr = allStr.Substring(startInt, allStr.IndexOf("]", startInt) - startInt + 1);
+                    //allStr= allStr.Replace(subStr,"字段"+startInt);
+                    startInt = allStr.IndexOf("$[", startInt + 1);
+
+                    if (string.IsNullOrEmpty(TestStr))
+                    {
+                        TestStr += subStr + ":\n";
+                    }
+                    else
+                    {
+                        if(!TestStr.Contains(subStr))
+                        TestStr += ";" + subStr + ":\n";
+                    }
+                }
+                this.richTextBox2.Text = TestStr + allStr;
+                this.richTextBox3.Text = TestStr.Trim();
+               
+                fs.Flush();
+                sr.Close();
+                fs.Close();
+            }
+        }
+
+        private string openFileGetSet(string fileName)
+        {
+            
+
+            
+            FileStream fs = new FileStream(fileName, FileMode.Open);
+            StreamReader sr = new StreamReader(fs, Encoding.Default);
+            string TestStr = richTextBox3.Text+"\n";
+            try{
+                string allStr = sr.ReadToEnd();
+                int startInt = 0;
+                startInt = allStr.IndexOf("$[", startInt);
+
+                
+                while (startInt > 0)
+                {
+                    string subStr = allStr.Substring(startInt, allStr.IndexOf("]", startInt) - startInt + 1);
+                    //allStr= allStr.Replace(subStr,"字段"+startInt);
+                    startInt = allStr.IndexOf("$[", startInt + 1);
+
+                    if (string.IsNullOrEmpty(TestStr))
+                    {
+                        TestStr += subStr + ":\n";
+                    }
+                    else
+                    {
+                        if (!TestStr.Contains(subStr))
+                            TestStr += ";" + subStr + ":\n";
+                    }
+                }
+
+               
+            }catch(Exception ex)
+            {
+                
+            }finally{
+                fs.Flush();
+                sr.Close();
+                fs.Close();
+                
+            }
+            return TestStr;
+            
+            //this.richTextBox2.Text = TestStr + allStr;
+            //this.richTextBox3.Text = TestStr.Trim();
+
+            
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (this.richTextBox2.Text.Trim().Equals(""))
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(this.textBox2.Text.Trim()))
+            {
+                MessageBox.Show("请选择一个模板");
+                return;
+            }
+
+            //**************生成Sql********************
+            //SQLsb.Clear();
+            //SQLsb.Append("create table " + dicParam["tabName"] + " (TaskID int PRIMARY KEY,");
+
+
+
+
+            //dicParam.Clear();
+            //string[] paramStrs = this.txtParam.Text.Split(new String[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            //foreach (string strs in paramStrs)
+            //{
+            //    string[] ss = strs.Trim().Split('=');
+            //    dicParam.Add(ss[0].Trim(), ss[1].Trim());
+            //}
+
+
+            string fileName = this.textBox2.Text;
+            FileStream fs = new FileStream(fileName, FileMode.Open);
+            StreamReader sr = new StreamReader(fs, Encoding.Default);
+
+            string allStr = sr.ReadToEnd();
+            int startInt = 0;
+            startInt = allStr.IndexOf("$[", startInt);
+
+            string TestStr = "";
+            while (startInt > 0)
+            {
+                string subStr = allStr.Substring(startInt, allStr.IndexOf("]", startInt) - startInt + 1);
+
+                string[] strs = this.richTextBox3.Text.Split(';');
+                foreach (string str in strs)
+                {
+                    string[] props = str.Split(':');
+                    if (subStr.Contains(props[0].Trim().Trim('\n')))
+                    {
+
+                        if (subStr.Contains("$[@"))
+                        {
+                            switch (subStr)
+                            {
+                                case "$[@rows$]":
+                                    //allStr = allStr.Replace(subStr, props[1]+"neibu");
+                                    string TempFStr = "";
+                                    string[] FStrs;
+                                    if(props.Count()>1)
+                                    {
+                                        FStrs = props[1].Trim('\n').Split(new string[] { "--" }, StringSplitOptions.RemoveEmptyEntries);
+                                    }else
+                                    {
+                                        FStrs = this.textBox4.Text.Split(new string[] { "--" }, StringSplitOptions.RemoveEmptyEntries);
+                                    }
+                                    
+                                    if(FStrs.Count()>0)
+                                    { 
+                                        for(int i=0;i<FStrs.Count();i++)
+                                        {
+                                            if(i!=FStrs.Count()-1)
+                                            TempFStr += "{ name: '"+FStrs[i]+"' },";
+                                            else
+                                            {
+                                                TempFStr += "{ name: '" + FStrs[i] + "' }";
+                                            }
+                                        }
+                                    }
+                                    allStr = allStr.Replace(subStr, TempFStr);
+                                    break;
+                                case "$[@rows1$]":
+                                    TempFStr = "";
+                                    FStrs = props[1].Trim('\n').Split(new string[]{"--"},StringSplitOptions.RemoveEmptyEntries);
+                                    if(FStrs.Count()>0)
+                                    { 
+                                        for(int i=0;i<FStrs.Count();i++)
+                                        {
+                                            string[] tfs = FStrs[i].Split('*');
+                                            if(i!=FStrs.Count()-1)
+                                            {
+                                                TempFStr += "{ header: '" + tfs[1] + "', dataIndex: '" + tfs[0] + "', width: 150, align: 'left' },";
+                                                
+                                            }
+                                            else
+                                            {
+                                                TempFStr += "{ header: '" + tfs[1] + "', dataIndex: '" + tfs[0] + "', id: 'extcol', align: 'left' }";
+                                            }
+                                        }
+                                    }
+                                    allStr = allStr.Replace(subStr, TempFStr);
+                                    break;
+                                default:
+                                    allStr = allStr.Replace(subStr, props[1]);
+                                    break;
+
+                            }
+                            
+                            break;
+                        }
+
+                        if (props[0].Contains("$[#"))
+                        {
+                            allStr = allStr.Replace(subStr, dicParam["tabName"] + "." + props[1]);
+                            SQLsb.Append(props[1] + "  nvarchar(Max),");
+                        }
+                        allStr = allStr.Replace(subStr, props[1]);
+                        break;
+                    }
+                }
+
+                startInt = allStr.IndexOf("$[", 0);
+                TestStr += subStr + "\n";
+            }
+            //SQLsb.Remove(SQLsb.Length - 1, 1).Append(")");
+            //this.sqlTxt.Text = SQLsb.ToString();
+            this.richTextBox2.Text = allStr;
+            //this.webB1.DocumentText = allStr;
+
+            //fs.Flush();
+            sr.Close();
+            fs.Close();
+        }
+
+        private string GenCode(string filePath)
+        {
+            string fileName = filePath;
+            FileStream fs = new FileStream(fileName, FileMode.Open);
+            StreamReader sr = new StreamReader(fs, Encoding.Default);
+
+            string allStr = sr.ReadToEnd();
+            int startInt = 0;
+            startInt = allStr.IndexOf("$[", startInt);
+
+            string TestStr = "";
+            while (startInt > 0)
+            {
+                string subStr = allStr.Substring(startInt, allStr.IndexOf("]", startInt) - startInt + 1);
+
+                string[] strs = this.richTextBox3.Text.Split(';');
+                foreach (string str in strs)
+                {
+                    string[] props = str.Split(':');
+                    if (subStr.Contains(props[0].Trim().Trim('\n')))
+                    {
+                      
+                        if (subStr.Contains("$[@"))
+                        {
+                            switch (subStr)
+                            {
+                                case "$[@rows$]":
+                                    //allStr = allStr.Replace(subStr, props[1]+"neibu");
+                                    string TempFStr = "";
+                                    string[] FStrs;
+                                    if (props.Count() > 1)
+                                    {
+                                        FStrs = props[1].Trim('\n').Split(new string[] { "--" }, StringSplitOptions.RemoveEmptyEntries);
+                                    }
+                                    else
+                                    {
+                                        FStrs = this.textBox4.Text.Split(new string[] { "--" }, StringSplitOptions.RemoveEmptyEntries);
+                                    }
+
+                                    if (FStrs.Count() > 0)
+                                    {
+                                        for (int i = 0; i < FStrs.Count(); i++)
+                                        {
+                                            if (i != FStrs.Count() - 1)
+                                                TempFStr += "{ name: '" + FStrs[i] + "' },";
+                                            else
+                                            {
+                                                TempFStr += "{ name: '" + FStrs[i] + "' }";
+                                            }
+                                        }
+                                    }
+                                    allStr = allStr.Replace(subStr, TempFStr);
+                                    break;
+                                case "$[@rows2$]":
+                                    TempFStr = "";
+                                    FStrs = props[1].Trim('\n').Split(new string[] { "--" }, StringSplitOptions.RemoveEmptyEntries);
+                                    if (FStrs.Count() > 0)
+                                    {
+                                        for (int i = 0; i < FStrs.Count(); i++)
+                                        {
+                                            if (i != FStrs.Count() - 1)
+                                            {
+                                                TempFStr += FStrs[i] + " LIKE N'%{0}%' or ";
+                                            } 
+                                            else
+                                            {
+                                                TempFStr += FStrs[i] + " LIKE N'%{0}%' ";
+                                            }
+                                        }
+                                    }
+                                    allStr = allStr.Replace(subStr, TempFStr);
+                                    break;
+                                case "$[@rows1$]":
+                                    TempFStr = "";
+                                    FStrs = props[1].Trim('\n').Split(new string[] { "--" }, StringSplitOptions.RemoveEmptyEntries);
+                                    if (FStrs.Count() > 0)
+                                    {
+                                        for (int i = 0; i < FStrs.Count(); i++)
+                                        {
+                                            string[] tfs = FStrs[i].Split('*');
+                                            if (i != FStrs.Count() - 1)
+                                            {
+                                                TempFStr += "{ header: '" + tfs[1] + "', dataIndex: '" + tfs[0] + "', width: 150, align: 'left' },";
+
+                                            }
+                                            else
+                                            {
+                                                TempFStr += "{ header: '" + tfs[1] + "', dataIndex: '" + tfs[0] + "', id: 'extcol', align: 'left' }";
+                                            }
+                                        }
+                                    }
+                                    allStr = allStr.Replace(subStr, TempFStr);
+                                    break;
+                                case "$[@rows3$]":
+                                    //allStr = allStr.Replace(subStr, props[1]+"neibu");
+                                    
+                                    TempFStr = "";
+                                    FStrs = props[1].Trim('\n').Split(new string[] { "--" }, StringSplitOptions.RemoveEmptyEntries);
+
+                                    if (FStrs.Count() > 0)
+                                    {
+                                        for (int i = 0; i < FStrs.Count(); i++)
+                                        {
+                                            string endStr = FStrs[i].Substring(FStrs.Length - 3);
+                                            switch(endStr)
+                                            {
+                                                case "Txt":
+                                                case "Str":
+                                                    TempFStr += "item.Attributes.Add(\""+FStrs[i]+"\", Convert.ToString(reader[\""+FStrs[i]+"\"]));\n";
+                                                    break;
+                                                case "Int":
+                                                    TempFStr += "item.Attributes.Add(\"" + FStrs[i] + "\", Convert.ToInt32(reader[\"" + FStrs[i] + "\"]));\n";
+                                                    break;
+                                                case "Dat":
+                                                    TempFStr += "item.Attributes.Add(\"" + FStrs[i] + "\", Convert.ToDateTime(reader[\"" + FStrs[i] + "\"]).ToString(\"yyyy-MM-dd\"));\n";
+                                                    break;
+                                                case "Dec":
+                                                    TempFStr += "item.Attributes.Add(\"" + FStrs[i] + "\", Convert.ToDecimal(reader[\"" + FStrs[i] + "\"]));\n";
+                                                    break;
+                                                default:
+                                                    TempFStr += "item.Attributes.Add(\"" + FStrs[i] + "\", Convert.ToString(reader[\"" + FStrs[i] + "\"]));\n";
+                                                    break;
+                                            }
+                                            
+                                        }
+                                    }
+                                    allStr = allStr.Replace(subStr, TempFStr);
+                                    break;
+                                default:
+                                    allStr = allStr.Replace(subStr, props[1].Trim('\n'));
+                                    break;
+
+                            }
+
+                            break;
+                        }
+
+                        if (props[0].Contains("$[#"))
+                        {
+                            allStr = allStr.Replace(subStr, dicParam["tabName"] + "." + props[1].Trim('\n'));
+                            SQLsb.Append(props[1] + "  nvarchar(Max),");
+                        }
+                        allStr = allStr.Replace(subStr, props[1].Trim('\n'));
+                        break;
+                    }
+                }
+
+                startInt = allStr.IndexOf("$[", 0);
+                TestStr += subStr + "\n";
+            }
+            //SQLsb.Remove(SQLsb.Length - 1, 1).Append(")");
+            //this.sqlTxt.Text = SQLsb.ToString();
+            
+            //this.webB1.DocumentText = allStr;
+
+            //fs.Flush();
+            sr.Close();
+            fs.Close();
+            return allStr;
+        }
+        private void button7_Click(object sender, EventArgs e)
+        {
+           
+            OpenFileDialog open = new OpenFileDialog();
+            //open.Filter = "Word文档(*.doc)|*.doc|其它文档(*.*)|*.*";
+            open.Filter = "所有文档(*.*)|*.*";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                this.textBox5.Text = open.FileName;
+                this.richTextBox3.Text = openFileGetSet(open.FileName);
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            //open.Filter = "Word文档(*.doc)|*.doc|其它文档(*.*)|*.*";
+            open.Filter = "所有文档(*.*)|*.*";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                this.textBox6.Text = open.FileName;
+                this.richTextBox3.Text = openFileGetSet(open.FileName);
+            }
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string currDir = System.Environment.CurrentDirectory + "/codes/" + "/" + dicParam["tabName"] + "/";
+            if(!Directory.Exists(currDir))
+            {
+                Directory.CreateDirectory(currDir);
+            }
+
+            StreamWriter sw = new StreamWriter(currDir + dicParam["tabName"] + ".aspx", false, Encoding.UTF8);
+            sw.Write(this.richTextBox1.Text);
+            sw.Flush();
+            sw.Close();
+
+            currDir = System.Environment.CurrentDirectory + "/codes/" + "/" + dicParam["tabName"] + "/Modules/";
+            if (!Directory.Exists(currDir))
+            {
+                Directory.CreateDirectory(currDir);
+            }
+            sw = new StreamWriter(currDir + dicParam["tabName"] + ".js", false, Encoding.UTF8);
+            sw.Write(GenCode(this.textBox2.Text));
+            sw.Flush();
+            sw.Close();
+
+            currDir = System.Environment.CurrentDirectory + "/codes/" + "/" + dicParam["tabName"] + "/StoreDataService/";
+            if (!Directory.Exists(currDir))
+            {
+                Directory.CreateDirectory(currDir);
+            }
+            sw = new StreamWriter(currDir + dicParam["tabName"] + ".ashx", false, Encoding.UTF8);
+            sw.Write(GenCode(this.textBox5.Text));
+            sw.Flush();
+            sw.Close();
+
+            currDir = System.Environment.CurrentDirectory + "/codes/" + "/" + dicParam["tabName"] + "/RFC/";
+            if (!Directory.Exists(currDir))
+            {
+                Directory.CreateDirectory(currDir);
+            }
+            sw = new StreamWriter(currDir + "Delete_"+dicParam["tabName"] + ".ashx", false, Encoding.UTF8);
+            sw.Write(GenCode(this.textBox6.Text));
+            sw.Flush();
+            sw.Close();
+
+            MessageBox.Show("成功");
         }
     }
 
