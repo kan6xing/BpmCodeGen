@@ -1,138 +1,66 @@
-<%@ WebHandler Language="C#" Class="OA_Conference" %>
+ï»¿<%@ WebHandler Language="C#" Class="DeleteLeadSale" %>
 
 using System;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-
-public class OA_Conference : IHttpHandler {
+public class DeleteLeadSale : IHttpHandler {
 
     public void ProcessRequest(HttpContext context)
     {
-        YZAuthHelper.AshxAuthCheck();
+        YZDebugHelper.Init();
 
-        GridPageInfo gridPageInfo = new GridPageInfo(context);
-        SqlServerProvider queryProvider = new SqlServerProvider(context);
-
-        string searchType = context.Request.Params["SearchType"];
-        string keyword = context.Request.Params["Keyword"];
-
-        //»ñµÃ²éÑ¯Ìõ¼þ
-        string filter = null;
-
-        if (searchType == "QuickSearch")
+        string clientMethod = context.Request.Params["Method"];
+        string method = clientMethod;
+        if (method != null) 
         {
-            //Ó¦ÓÃ¹Ø¼ü×Ö¹ýÂË
-
-            if (!String.IsNullOrEmpty(keyword))
-                filter = queryProvider.CombinCond(filter, String.Format("proposerStr LIKE N'%{0}%' shipperStr LIKE N'%{0}%' toStr LIKE N'%{0}%' expressTypeStr LIKE N'%{0}%' or ", queryProvider.EncodeText(keyword)));
+            method = method.Trim().ToLower();
         }
-        else if (searchType == "AdvancedSearch")
+        if (method == "delete") 
         {
-          
-            //string cType = context.Request.Params["Type"].ToString();
-            //string cTitle = context.Request.Params["Title"].ToString();
-            //string cCreateUser = context.Request.Params["CreateUser"].ToString();
-
-            //if(string.IsNullOrEmpty(filter))
-            //{
-            //    filter = " 1=1 ";
-            //}
-            //if (!string.IsNullOrEmpty(cType))
-            //{
-            //    filter = filter + string.Format(" and Type like '%{0}%'", cType);
-            //}
-            //if (!string.IsNullOrEmpty(cTitle))
-            //{
-            //    filter = filter + string.Format(" and Title like '%{0}%'", cTitle);
-            //}
-            //if (!string.IsNullOrEmpty(cCreateUser))
-            //{
-            //    filter = filter + string.Format(" and CreateUser like '%{0}%'", cCreateUser);
-            //}
-
-        }
-
-        if (!string.IsNullOrEmpty(filter))
-            filter = "where 1=1" + filter; 
-        //»ñµÃÅÅÐò×Ó¾ä
-        string order = queryProvider.GetSortString("id") ;
-        
-        
-
-        //»ñµÃSQL
-        //string query = String.Format("with T as (select top {0} ROW_NUMBER() OVER(order by {1}) as RowNum,"+
-        //    "id,Name,DepartmentID,remark,Picture,OwnerID,ISNULL(OUName,DepartmentID) as OUName,ISNULL(DisplayName,OwnerID) as DisplayName from iStamp LEFT JOIN BPMSysOUs ON iStamp.DepartmentID=BPMSysOUs.Code " +
-        //    "LEFT JOIN BPMSysUsers ON iStamp.OwnerID=BPMSysUsers.Account {2}) select * from T where RowNum >= {3};select count(*) from iStamp {2}",
-        //    gridPageInfo.RowNumEnd,
-        //    order,
-        //    filter,
-        //    gridPageInfo.RowNumStart);
-
-        string query = String.Format("with T as (select top {0} ROW_NUMBER() OVER(order by {1}) as RowNum,* from ExpressTab {2}) select * from T where RowNum >= {3};select count(*) from ExpressTab {2}",
-            gridPageInfo.RowNumEnd,
-            order,
-            filter,
-            gridPageInfo.RowNumStart);
-
-        //Ö´ÐÐ²éÑ¯
-        JsonItem rv = new JsonItem();
-        using (SqlConnection cn = new SqlConnection())
-        {
-            cn.ConnectionString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["BPMDATA"].ConnectionString;
-            cn.Open();
-
-            using (SqlCommand cmd = new SqlCommand())
+            try
             {
-                cmd.Connection = cn;
-                cmd.CommandText = query;
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                int count = Int32.Parse(context.Request.Params["Count"]);
+                using(SqlConnection cn = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["BPMDB"].ConnectionString))
                 {
-                    //½«Êý¾Ý×ª»¯ÎªJson¼¯ºÏ
-                    JsonItemCollection children = new JsonItemCollection();
-                    rv.Attributes.Add("children", children);
-                    int rowNum = gridPageInfo.RowNumStart;
-                    while (reader.Read())
+                    cn.Open();
+                    for(int i=0; i<count; i++)
                     {
-                        JsonItem item = new JsonItem();
-                        children.Add(item);
-                        item.Attributes.Add("RowNumber", rowNum);
-                        item.Attributes.Add("TaskID", Convert.ToInt32(reader["TaskID"]));
-                        item.Attributes.Add("proposerStr", Convert.ToString(reader["proposerStr"]));
-item.Attributes.Add("shipperStr", Convert.ToString(reader["shipperStr"]));
-item.Attributes.Add("toStr", Convert.ToString(reader["toStr"]));
-item.Attributes.Add("expressTypeStr", Convert.ToString(reader["expressTypeStr"]));
-
-                        rowNum++;
-                        
+                       string id = context.Request.Params["ID"+i.ToString()];
+                      // string id = context.Request .Params["ID"];
+                        SqlCommand cmd = new SqlCommand();
+                        cmd.Connection=cn;
+                        cmd.CommandText = " delete from ExpressTab  where (TaskID='" + id + "')";
+                        cmd.ExecuteNonQuery();
+                  
                     }
-
-                    //×ÜÐÐÊý
-
-                    reader.NextResult();
-                    reader.Read();
-                    rv.Attributes.Add(JsonItem.TotalRows, Convert.ToInt32(reader[0]));
                 }
+                JsonItem rv = new JsonItem();
+                rv.Attributes.Add("success", true);
+
+                context.Response.Write(rv.ToString());
+            }
+            catch (Exception  exp)
+            {
+                JsonItem rv = new JsonItem();
+                rv.Attributes.Add("success", false);
+                rv.Attributes.Add("errorMessage", exp.Message);
+                context.Response.Write(rv.ToString());
             }
         }
+        else
+        {
+            JsonItem rv = new JsonItem();
+            rv.Attributes.Add("success", false);
+            rv.Attributes.Add("errorMessage", String.Format("æœªçŸ¥çš„å‘½ä»¤ï¼š{0}", clientMethod));
 
-        //Êä³öÊý¾Ý
-        context.Response.Write(rv.ToString());
+            context.Response.Write(rv.ToString());
+        }
     }
-
-    //private void GetAllOU(BPMConnection cn, OU ou, OUCollection allous)
-    //{
-    //    allous.Add(ou);
-
-    //    OUCollection cous = ou.GetChildren(cn);
-    //    foreach (OU cou in cous)
-    //        GetAllOU(cn, cou, allous);
-    //}
-
-    public bool IsReusable
+ 
+    public bool IsReusable 
     {
-        get
+        get 
         {
             return false;
         }

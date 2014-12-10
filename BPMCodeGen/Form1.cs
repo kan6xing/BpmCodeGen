@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections;
+using System.Diagnostics;
 namespace BPMCodeGen
 {
     public partial class Form1 : Form
@@ -48,6 +49,11 @@ namespace BPMCodeGen
             this.richSetup.Text = bpmg.paramStr;
             this.txtParam.Text = bpmg.TabStr;
             this.MobTxt.Text = bpmg.cmobStr;
+
+            this.textBox2.Text = bpmg.jsStr;
+            this.textBox5.Text = bpmg.ashxStr;
+            this.textBox6.Text = bpmg.deleteStr;
+            this.richTextBox3.Text = bpmg.gridParamStr;
 
             string[] paramStrs = this.txtParam.Text.Split(new String[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string strs in paramStrs)
@@ -511,6 +517,7 @@ namespace BPMCodeGen
                 allField += s + "--";
             }
             this.textBox4.Text = allField;
+            richTextBox3.Text = richTextBox3.Text.Replace("$[tabName,表名$]:", "$[tabName,表名$]:" + dicParam["tabName"]).Replace(";$[formName,表单应用$]:", ";$[formName,表单应用$]:" + bpmg.NameStr).Replace(";$[formName,流程名$]:", ";$[formName,流程名$]:"+bpmg.NameStr);
             //fs.Flush();
             sr.Close();
             fs.Close();
@@ -748,6 +755,11 @@ namespace BPMCodeGen
                 bpmg.TabStr = this.txtParam.Text;
                 bpmg.paramStr = this.richSetup.Text;
                 bpmg.NameStr = titleName;
+
+                bpmg.jsStr = this.textBox2.Text;
+                bpmg.ashxStr = this.textBox5.Text;
+                bpmg.deleteStr = this.textBox6.Text;
+                bpmg.gridParamStr = this.richTextBox3.Text;
                 bpmg.Update();
             }
             else if (drz == DialogResult.No)
@@ -758,6 +770,11 @@ namespace BPMCodeGen
                 bpmg.TabStr = this.txtParam.Text;
                 bpmg.paramStr = this.richSetup.Text;
                 bpmg.NameStr = titleName;
+
+                bpmg.jsStr = this.textBox2.Text;
+                bpmg.ashxStr = this.textBox5.Text;
+                bpmg.deleteStr = this.textBox6.Text;
+                bpmg.gridParamStr = this.richTextBox3.Text;
                 bpmg.Add();
                 bpmg.GetModel("IDInt>0 order by createDat desc");
             }
@@ -1229,6 +1246,21 @@ namespace BPMCodeGen
             sw.Close();
 
             MessageBox.Show("成功");
+        }
+
+        private void btnOpenFolder_Click(object sender, EventArgs e)
+        {
+            Process p = new Process();
+            ProcessStartInfo pstart = new ProcessStartInfo();
+            pstart.FileName = System.Environment.CurrentDirectory + "/codes/" + "/" + dicParam["tabName"] + "/";
+           
+            if (!Directory.Exists(pstart.FileName))
+            {
+                Directory.CreateDirectory(pstart.FileName);
+            }
+            pstart.Verb = "Open";
+            p.StartInfo = pstart;
+            p.Start();
         }
     }
 

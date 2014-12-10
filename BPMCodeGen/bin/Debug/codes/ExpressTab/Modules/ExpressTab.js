@@ -1,8 +1,8 @@
-Ext.namespace("YZSoft.ExpressTab");
+ï»¿Ext.namespace("YZSoft.ExpressTab");
 
 YZSoft.ExpressTab.OpenApplication = function(gridid,ID) {
-    YZSoft.BPM.FormManager.OpenFormApplication('Express/·¢»õÉêÇë', ID, 'Read', true, {
-        title: '²é¿´',
+    YZSoft.BPM.FormManager.OpenFormApplication('å¿«é€’ç”³è¯·å•', ID, 'Read', true, {
+        title: 'æŸ¥çœ‹',
         width:830,
         height:505
     });
@@ -24,8 +24,8 @@ YZSoft.ExpressTab.MoldOption = {
         };
 
         Ext.Msg.show({
-            title: 'É¾³ıÈ·ÈÏ',
-            msg: 'ÄúÈ·¶¨ÒªÉ¾³ıÑ¡ÖĞµÄĞÂÎÅÂğ£¿',
+            title: 'åˆ é™¤ç¡®è®¤',
+            msg: 'æ‚¨ç¡®å®šè¦åˆ é™¤é€‰ä¸­çš„æ–°é—»å—ï¼Ÿ',
             buttons: Ext.Msg.OKCANCEL,
             icon: Ext.MessageBox.INFO,
 
@@ -33,9 +33,9 @@ YZSoft.ExpressTab.MoldOption = {
                 if (btn != 'ok')
                     return;
                 YZSoft.Ajax.RFC({
-                    url: 'YZModules/Express/RFC/Delete_ExpressTab.ashx',
+                    url: 'YZModules//RFC/Delete_ExpressTab.ashx',
                     params: params,
-                    waitMsg: 'ÕıÔÚÉ¾³ı...',
+                    waitMsg: 'æ­£åœ¨åˆ é™¤...',
                     waitMsgTarget: grid.id,
 
                     success: function(action) {
@@ -45,7 +45,7 @@ YZSoft.ExpressTab.MoldOption = {
 
                     failure: function(action) {
                         Ext.Msg.show({
-                            title: '´íÎóÌáÊ¾',
+                            title: 'é”™è¯¯æç¤º',
                             msg: YZSoft.HttpUtility.HtmlEncode(action.result.errorMessage, true),
                             buttons: Ext.Msg.OK,
                             icon: Ext.MessageBox.WARNING,
@@ -75,12 +75,12 @@ YZSoft.ExpressTab.NewsManagePanel = Ext.extend(Ext.Panel, {
                 { name: 'RowNumber' },
                 { name: 'TaskID' },
                 { name: 'Type' },
-                { name: 'proposerStr' },{ name: 'shipperStr' },{ name: 'toStr' },{ name: 'expressTypeStr' }
+                
             ],
 
             proxy: new Ext.data.HttpProxy({
                 method: 'GET',
-                url: 'YZModules/Express/StoreDataService/ExpressTab.ashx'
+                url: 'YZModules//StoreDataService/ExpressTab.ashx'
             }),
             listeners: {
                 scope: this,
@@ -114,9 +114,9 @@ YZSoft.ExpressTab.NewsManagePanel = Ext.extend(Ext.Panel, {
 
             // grid columns
             columns: [
-                { header: 'ĞòºÅ', dataIndex: 'RowNumber', width: 50, align: 'left' },
-                { header: '±àºÅ', dataIndex: 'TaskID', width: 50, align: 'left', sortable: true, hidden: true },
-                { header: 'ÉêÇëÈË', dataIndex: 'proposerStr', width: 150, align: 'left' },{ header: '·¢»õÈË', dataIndex: 'shipperStr', width: 150, align: 'left' },{ header: 'ÊÕ¼şÈË', dataIndex: 'toStr', width: 150, align: 'left' },{ header: '¿ìµİ·½Ê½', dataIndex: 'expressTypeStr', id: 'extcol', align: 'left' }
+                { header: 'åºå·', dataIndex: 'RowNumber', width: 50, align: 'left' },
+                { header: 'ç¼–å·', dataIndex: 'TaskID', width: 50, align: 'left', sortable: true, hidden: true },
+                
             ],
 
             autoExpandColumn: 'extcol',
@@ -128,8 +128,8 @@ YZSoft.ExpressTab.NewsManagePanel = Ext.extend(Ext.Panel, {
             listeners: {
                 scope: this,
                 rowdblclick: function(grid, rowIndex, e) {
-                    YZSoft.BPM.FormManager.OpenFormApplication('Express/·¢»õÉêÇë', this.store.getAt(rowIndex).data.TaskID, 'Read', true, {
-                        title: '²é¿´',
+                    YZSoft.BPM.FormManager.OpenFormApplication('å¿«é€’ç”³è¯·å•', this.store.getAt(rowIndex).data.TaskID, 'Read', true, {
+                        title: 'æŸ¥çœ‹',
                         width:830,
                         height:505
                     });
@@ -139,11 +139,11 @@ YZSoft.ExpressTab.NewsManagePanel = Ext.extend(Ext.Panel, {
 
         this.btnNew = new Ext.Button({
             iconCls: 'blist',
-            text: 'Ìí¼Ó',
+            text: 'æ·»åŠ ',
             scope: this,
             handler: function () {
-                YZSoft.BPM.FormManager.OpenPostWindow('·¢»õÉêÇë', true, {
-                    title: 'Ìí¼Ó',
+                YZSoft.BPM.FormManager.OpenPostWindow('å¿«é€’ç”³è¯·å•', true, {
+                    title: 'æ·»åŠ ',
                     width: 830,
                     height: 505,
                     listeners: {
@@ -155,8 +155,8 @@ YZSoft.ExpressTab.NewsManagePanel = Ext.extend(Ext.Panel, {
                         }
                     }
                 });
-                //    YZSoft.BPM.FormManager.OpenFormApplication('Express/·¢»õÉêÇë', '', 'New', true, {
-            //    title: 'Ìí¼Ó',
+                //    YZSoft.BPM.FormManager.OpenFormApplication('å¿«é€’ç”³è¯·å•', '', 'New', true, {
+            //    title: 'æ·»åŠ ',
             //    width:830,
             //    height:505,
             //    listeners: {
@@ -174,7 +174,7 @@ YZSoft.ExpressTab.NewsManagePanel = Ext.extend(Ext.Panel, {
 
         this.btnEdit = new Ext.Button({
             iconCls: 'blist',
-            text: '±à¼­',
+            text: 'ç¼–è¾‘',
             scope: this,
             handler: function() {
                 var sm = this.grid.getSelectionModel();
@@ -189,7 +189,7 @@ YZSoft.ExpressTab.NewsManagePanel = Ext.extend(Ext.Panel, {
         
         this.btnDelete = new Ext.Button({
             iconCls: 'blist',
-            text: 'É¾³ı',
+            text: 'åˆ é™¤',
             scope: this,
             handler: function() {
                 YZSoft.ExpressTab.MoldOption.DeleteStamp(this.grid);
@@ -197,7 +197,7 @@ YZSoft.ExpressTab.NewsManagePanel = Ext.extend(Ext.Panel, {
         });
         
         var cfg = {
-            title: "²İ¸å¼Ğ",
+            title: "è‰ç¨¿å¤¹",
             closable: true,
             border: false,
             rootVisible: false,
@@ -207,7 +207,7 @@ YZSoft.ExpressTab.NewsManagePanel = Ext.extend(Ext.Panel, {
             tbar: [this.btnNew, this.btnEdit, this.btnDelete, '->',{
                 xtype: 'button',
                 scope: this,
-                text: 'Çå³ıËÑË÷Ìõ¼ş',
+                text: 'æ¸…é™¤æœç´¢æ¡ä»¶',
                 handler: function() {
                     
                     this.store.baseParams = this.store.baseParams || {};
@@ -220,7 +220,7 @@ YZSoft.ExpressTab.NewsManagePanel = Ext.extend(Ext.Panel, {
                 store: this.store,
                 emptySearch: true,
                 width: 160,
-                showAdvButton: true,
+                showAdvButton: false,
                 scope: this,
                 handler: function(advBtn) {
                                         this.dlg = YZSoft.DialogManager.ShowDialogExt(this.idKeyword + '-dlgs',
@@ -254,16 +254,16 @@ YZSoft.ExpressTab.NewsManagePanel = Ext.extend(Ext.Panel, {
                 this.grid.TaskID,
                 record.data.TaskID,
                 YZSoft.HttpUtility.HtmlEncode(value));
-            //YZSoft.BPM.FormManager.OpenFormApplication('Express/·¢»õÉêÇë', this.store.getAt(rowIndex).data.TaskID, 'Read', true, {
-            //    title: '²é¿´',
+            //YZSoft.BPM.FormManager.OpenFormApplication('å¿«é€’ç”³è¯·å•', this.store.getAt(rowIndex).data.TaskID, 'Read', true, {
+            //    title: 'æŸ¥çœ‹',
             //    width: 830,
             //    height: 505
             //});
         },
 
         EditRow: function(stamp) {
-            YZSoft.BPM.FormManager.OpenFormApplication('Express/·¢»õÉêÇë', stamp.TaskID, 'Edit', true, {
-                title: 'ĞŞ¸Ä',
+            YZSoft.BPM.FormManager.OpenFormApplication('å¿«é€’ç”³è¯·å•', stamp.TaskID, 'Edit', true, {
+                title: 'ä¿®æ”¹',
                  width:830,
                 height:505,
                 listeners: {

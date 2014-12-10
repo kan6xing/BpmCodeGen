@@ -1,4 +1,4 @@
-<%@ WebHandler Language="C#" Class="OA_Conference" %>
+ï»¿<%@ WebHandler Language="C#" Class="OA_Conference" %>
 
 using System;
 using System.Web;
@@ -17,15 +17,15 @@ public class OA_Conference : IHttpHandler {
         string searchType = context.Request.Params["SearchType"];
         string keyword = context.Request.Params["Keyword"];
 
-        //»ñµÃ²éÑ¯Ìõ¼ş
+        //è·å¾—æŸ¥è¯¢æ¡ä»¶
         string filter = null;
 
         if (searchType == "QuickSearch")
         {
-            //Ó¦ÓÃ¹Ø¼ü×Ö¹ıÂË
+            //åº”ç”¨å…³é”®å­—è¿‡æ»¤
 
             if (!String.IsNullOrEmpty(keyword))
-                filter = queryProvider.CombinCond(filter, String.Format("proposerStr LIKE N'%{0}%' shipperStr LIKE N'%{0}%' toStr LIKE N'%{0}%' expressTypeStr LIKE N'%{0}%' or ", queryProvider.EncodeText(keyword)));
+                filter = queryProvider.CombinCond(filter, String.Format("", queryProvider.EncodeText(keyword)));
         }
         else if (searchType == "AdvancedSearch")
         {
@@ -54,13 +54,13 @@ public class OA_Conference : IHttpHandler {
         }
 
         if (!string.IsNullOrEmpty(filter))
-            filter = "where 1=1" + filter; 
-        //»ñµÃÅÅĞò×Ó¾ä
+            filter = "where 1=1 and (" + filter+") "; 
+        //è·å¾—æ’åºå­å¥
         string order = queryProvider.GetSortString("id") ;
         
         
 
-        //»ñµÃSQL
+        //è·å¾—SQL
         //string query = String.Format("with T as (select top {0} ROW_NUMBER() OVER(order by {1}) as RowNum,"+
         //    "id,Name,DepartmentID,remark,Picture,OwnerID,ISNULL(OUName,DepartmentID) as OUName,ISNULL(DisplayName,OwnerID) as DisplayName from iStamp LEFT JOIN BPMSysOUs ON iStamp.DepartmentID=BPMSysOUs.Code " +
         //    "LEFT JOIN BPMSysUsers ON iStamp.OwnerID=BPMSysUsers.Account {2}) select * from T where RowNum >= {3};select count(*) from iStamp {2}",
@@ -75,11 +75,11 @@ public class OA_Conference : IHttpHandler {
             filter,
             gridPageInfo.RowNumStart);
 
-        //Ö´ĞĞ²éÑ¯
+        //æ‰§è¡ŒæŸ¥è¯¢
         JsonItem rv = new JsonItem();
         using (SqlConnection cn = new SqlConnection())
         {
-            cn.ConnectionString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["BPMDATA"].ConnectionString;
+            cn.ConnectionString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["BPMDB"].ConnectionString;
             cn.Open();
 
             using (SqlCommand cmd = new SqlCommand())
@@ -89,7 +89,7 @@ public class OA_Conference : IHttpHandler {
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    //½«Êı¾İ×ª»¯ÎªJson¼¯ºÏ
+                    //å°†æ•°æ®è½¬åŒ–ä¸ºJsoné›†åˆ
                     JsonItemCollection children = new JsonItemCollection();
                     rv.Attributes.Add("children", children);
                     int rowNum = gridPageInfo.RowNumStart;
@@ -99,16 +99,12 @@ public class OA_Conference : IHttpHandler {
                         children.Add(item);
                         item.Attributes.Add("RowNumber", rowNum);
                         item.Attributes.Add("TaskID", Convert.ToInt32(reader["TaskID"]));
-                        item.Attributes.Add("proposerStr", Convert.ToString(reader["proposerStr"]));
-item.Attributes.Add("shipperStr", Convert.ToString(reader["shipperStr"]));
-item.Attributes.Add("toStr", Convert.ToString(reader["toStr"]));
-item.Attributes.Add("expressTypeStr", Convert.ToString(reader["expressTypeStr"]));
-
+                        
                         rowNum++;
                         
                     }
 
-                    //×ÜĞĞÊı
+                    //æ€»è¡Œæ•°
 
                     reader.NextResult();
                     reader.Read();
@@ -117,7 +113,7 @@ item.Attributes.Add("expressTypeStr", Convert.ToString(reader["expressTypeStr"])
             }
         }
 
-        //Êä³öÊı¾İ
+        //è¾“å‡ºæ•°æ®
         context.Response.Write(rv.ToString());
     }
 

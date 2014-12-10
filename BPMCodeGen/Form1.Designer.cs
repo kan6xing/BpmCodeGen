@@ -66,6 +66,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnOpenFolder = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -285,6 +286,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnOpenFolder);
             this.tabPage2.Controls.Add(this.button8);
             this.tabPage2.Controls.Add(this.textBox6);
             this.tabPage2.Controls.Add(this.label5);
@@ -449,6 +451,16 @@
             this.label3.TabIndex = 1;
             this.label3.Text = "请选择一个模板";
             // 
+            // btnOpenFolder
+            // 
+            this.btnOpenFolder.Location = new System.Drawing.Point(1005, 5);
+            this.btnOpenFolder.Name = "btnOpenFolder";
+            this.btnOpenFolder.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenFolder.TabIndex = 21;
+            this.btnOpenFolder.Text = "打开文件夹";
+            this.btnOpenFolder.UseVisualStyleBackColor = true;
+            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -510,6 +522,7 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnOpenFolder;
     }
 }
 

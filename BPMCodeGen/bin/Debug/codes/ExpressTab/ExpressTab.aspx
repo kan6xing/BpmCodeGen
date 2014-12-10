@@ -1,4 +1,4 @@
-<%@ Page Language="C#" %>
+ï»¿<%@ Page Language="C#" %>
 <%@ Register TagPrefix="aspxform" Namespace="XFormDesigner.Framework.Web.UI" Assembly="XFormDesigner.Framework" %>
 <script runat="server">
 
@@ -30,7 +30,7 @@
                         <asp:Image id="Image1" runat="server" BorderStyle="None" ImageUrl="/BPM/YZSoft/Forms/Helps/Images/haili.jpg" Height="50px" Width="200px"></asp:Image>
                     </td>
                     <td style="BORDER-TOP: medium none; BORDER-RIGHT: medium none; BORDER-BOTTOM: medium none; BORDER-LEFT: medium none" rowspan="2" width="397" align="center">
-                        <font size="6" face="ËÎÌå"><strong>¿ìµÝÉêÇëµ¥
+                        <font size="6" face="å®‹ä½“"><strong>å¿«é€’ç”³è¯·å•
 </strong></font> 
                     </td>
                     <td style="BORDER-TOP: medium none; BORDER-RIGHT: medium none; BORDER-BOTTOM: medium none; BORDER-LEFT: medium none" height="39" colspan="2">
@@ -55,13 +55,13 @@
                     </td>
                     <td>
                         <p align="right">
-                            <strong><font color="#0000ff">µ¥ºÅ£º</font></strong> 
+                            <strong><font color="#0000ff">å•å·ï¼š</font></strong> 
                         </p>
                     </td>
                     <td>
 					<!-- LF_ProgramDevCheck.SN -->
                         <aspxform:XTextBox id="XTextBox1" runat="server" BorderStyle="None" BorderColor="MintCream" BorderWidth="1px" width="100%" HiddenInput="False" XDataBind="ExpressTab.SN
-" Max="0" Min="0" ForeColor="Blue" TextAlign="Center" ValueToDisplayText Value ReadOnly="True">×Ô¶¯Éú³É</aspxform:XTextBox>
+" Max="0" Min="0" ForeColor="Blue" TextAlign="Center" ValueToDisplayText Value ReadOnly="True">è‡ªåŠ¨ç”Ÿæˆ</aspxform:XTextBox>
                     </td>
                 </tr>
             </tbody>
@@ -69,59 +69,59 @@
         <table style="BORDER-TOP: medium none; BORDER-RIGHT: medium none; BORDER-BOTTOM: medium none; BORDER-LEFT: medium none" cellspacing="0" cellpadding="0" width="800" align="center" border="0">
             <tbody>
 			<tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid; BORDER-LEFT: silver 1px solid" bgcolor="#e0e0e0" height="30"  colspan="8">
-                        <strong><font size="2">&nbsp;ÉêÇëÈËÐÅÏ¢</font></strong></td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ÉêÇëÈË </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                        <strong><font size="2">&nbsp;ç”³è¯·äººä¿¡æ¯</font></strong></td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       ç”³è¯·äºº </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabproposerStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.proposerStr"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ¹«Ë¾ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       å…¬å¸ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabcompanyStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.companyStr"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ²¿ÃÅ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       éƒ¨é—¨ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabpartStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.partStr"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ÈÕÆÚ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       æ—¥æœŸ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XDateTimePicker id="ExpressTabCteateDat" runat="server" BorderStyle="None" Width="100%" BorderColor="#DCDCDC" BorderWidth="1" XDataBind="ExpressTab.CteateDat"></aspxform:XDateTimePicker> </td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid; BORDER-LEFT: silver 1px solid" bgcolor="#e0e0e0" height="30"  colspan="8">
-                        <strong><font size="2">&nbsp;¼Ä¼þÈËÐÅÏ¢</font></strong></td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ¼Ä¼þÈË </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                        <strong><font size="2">&nbsp;å¯„ä»¶äººä¿¡æ¯</font></strong></td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       å¯„ä»¶äºº </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabshipperStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.shipperStr"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       µç»° </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       ç”µè¯ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabshipperTelStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.shipperTelStr"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ¹Ì¶¨µç»° </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       å›ºå®šç”µè¯ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabshipperPhoneStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.shipperPhoneStr"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ÓÊ±à </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       é‚®ç¼– </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabshipperPostStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.shipperPostStr"></aspxform:XTextBox> </td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       µ¥Î»Ãû³Æ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="7">
+                       å•ä½åç§° </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="7">
                        <aspxform:XTextBox id="ExpressTabshipperUnit7Str" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.shipperUnit7Str"></aspxform:XTextBox> </td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ¼Ä¼þÈËµØÖ· </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="7">
+                       å¯„ä»¶äººåœ°å€ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="7">
                        <aspxform:XTextBox id="ExpressTabshipperAdd7Str" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.shipperAdd7Str"></aspxform:XTextBox> </td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid; BORDER-LEFT: silver 1px solid" bgcolor="#e0e0e0" height="30"  colspan="8">
-                        <strong><font size="2">&nbsp;ÊÕ¼þÈËÐÅÏ¢</font></strong></td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ÊÕ¼þÈË </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                        <strong><font size="2">&nbsp;æ”¶ä»¶äººä¿¡æ¯</font></strong></td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       æ”¶ä»¶äºº </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabtoStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.toStr"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       µç»° </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       ç”µè¯ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabTelStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.TelStr"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ¹Ì¶¨µç»° </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       å›ºå®šç”µè¯ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabPhoneStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.PhoneStr"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ÓÊ±à </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       é‚®ç¼– </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabPostStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.PostStr"></aspxform:XTextBox> </td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       µ¥Î»Ãû³Æ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="7">
+                       å•ä½åç§° </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="7">
                        <aspxform:XTextBox id="ExpressTabunit7Str" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.unit7Str"></aspxform:XTextBox> </td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ÏêÏ¸µØÖ· </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="7">
+                       è¯¦ç»†åœ°å€ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="7">
                        <aspxform:XTextBox id="ExpressTabadd7Str" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.add7Str"></aspxform:XTextBox> </td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid; BORDER-LEFT: silver 1px solid" bgcolor="#e0e0e0" height="30"  colspan="8">
-                        <strong><font size="2">&nbsp;·¢»õÐÅÏ¢</font></strong></td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ÎïÆ·ÄÚÈÝ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="7">
+                        <strong><font size="2">&nbsp;å‘è´§ä¿¡æ¯</font></strong></td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       ç‰©å“å†…å®¹ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="7">
                        <aspxform:XTextBox id="ExpressTabthing7Str" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.thing7Str"></aspxform:XTextBox> </td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ÊýÁ¿ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       æ•°é‡ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabquantityInt" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.quantityInt"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ÖØÁ¿ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       é‡é‡ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabweightDec" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.weightDec"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ¸¶¿î·½Ê½ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ÏÖ¸¶¡¢µ½¸¶ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ¿ìµÝ·½Ê½ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       ä»˜æ¬¾æ–¹å¼ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       çŽ°ä»˜ã€åˆ°ä»˜ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       å¿«é€’æ–¹å¼ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabexpressTypeStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.expressTypeStr"></aspxform:XTextBox> </td></tr><tr><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ·¢»õ¼þÊý </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       å‘è´§ä»¶æ•° </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabeQuanInt" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.eQuanInt"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ¼Æ·ÑÖØÁ¿ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       è®¡è´¹é‡é‡ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabeWeightDec" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.eWeightDec"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       ÔË·Ñ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       è¿è´¹ </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabTotalDec" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.TotalDec"></aspxform:XTextBox> </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
-                       È¡»õÈË </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
+                       å–è´§äºº </td><td style="BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid; BORDER-BOTTOM: silver 1px solid;text-align:center; BORDER-LEFT: silver 1px solid"  height="30" colspan="1">
                        <aspxform:XTextBox id="ExpressTabebodyStr" runat="server" BorderStyle="None" BorderColor="#DCDCDC" BorderWidth="1" width="100%"  XDataBind="ExpressTab.ebodyStr"></aspxform:XTextBox> </td></tr>
             </tbody>
         </table>
@@ -129,7 +129,7 @@
             <tbody>
                 <tr>
                     <td style="BORDER-BOTTOM: silver 1px solid; BORDER-LEFT: silver 1px solid; BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid" bgcolor="#e0e0e0" height="30" width="800">
-                        <strong><font size="2">&nbsp; ÉóºËÒâ¼û</font></strong></td>
+                        <strong><font size="2">&nbsp; å®¡æ ¸æ„è§</font></strong></td>
                 </tr>
                 <tr>
                     <td style="BORDER-BOTTOM: silver 1px solid; BORDER-LEFT: silver 1px solid; BORDER-TOP: medium none; BORDER-RIGHT: silver 1px solid">
