@@ -444,8 +444,12 @@ namespace BPMCodeGen
                 TestStr += subStr + "\n";
             }
             SQLsb.Remove(SQLsb.Length - 1, 1).Append(")");
-            subSQLsb=subSQLsb.Substring(0, subSQLsb.Length - 1) + ")";
-            this.sqlTxt.Text = SQLsb.ToString()+subSQLsb;
+            if(!string.IsNullOrEmpty(subSQLsb))
+            {
+                subSQLsb = subSQLsb.Substring(0, subSQLsb.Length - 1) + ")";
+                this.sqlTxt.Text = SQLsb.ToString() + subSQLsb;
+            }
+            
             this.richTextBox1.Text = allStr;
             this.webB1.DocumentText = allStr;
 
