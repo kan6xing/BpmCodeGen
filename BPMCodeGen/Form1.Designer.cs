@@ -50,6 +50,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnOpenFolder = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -66,7 +67,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnOpenFolder = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -215,6 +215,7 @@
             this.sqlTxt.Location = new System.Drawing.Point(876, 470);
             this.sqlTxt.Multiline = true;
             this.sqlTxt.Name = "sqlTxt";
+            this.sqlTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.sqlTxt.Size = new System.Drawing.Size(247, 200);
             this.sqlTxt.TabIndex = 15;
             // 
@@ -310,6 +311,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "表格生成";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnOpenFolder
+            // 
+            this.btnOpenFolder.Location = new System.Drawing.Point(1005, 5);
+            this.btnOpenFolder.Name = "btnOpenFolder";
+            this.btnOpenFolder.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenFolder.TabIndex = 21;
+            this.btnOpenFolder.Text = "打开文件夹";
+            this.btnOpenFolder.UseVisualStyleBackColor = true;
+            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
             // 
             // button8
             // 
@@ -450,16 +461,6 @@
             this.label3.Size = new System.Drawing.Size(89, 12);
             this.label3.TabIndex = 1;
             this.label3.Text = "请选择一个模板";
-            // 
-            // btnOpenFolder
-            // 
-            this.btnOpenFolder.Location = new System.Drawing.Point(1005, 5);
-            this.btnOpenFolder.Name = "btnOpenFolder";
-            this.btnOpenFolder.Size = new System.Drawing.Size(75, 23);
-            this.btnOpenFolder.TabIndex = 21;
-            this.btnOpenFolder.Text = "打开文件夹";
-            this.btnOpenFolder.UseVisualStyleBackColor = true;
-            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
             // 
             // Form1
             // 
