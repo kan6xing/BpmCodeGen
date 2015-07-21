@@ -27,8 +27,18 @@ namespace BPMCodeGen
         {
             InitializeComponent();
             this.txtParam.Text = "tabName=CustName\r\ntab1=CustName1";
+            try
+            {
+                setAllMob();
+                setAllFile();
+            }
+            catch (Exception ex)
+            {
+                
+                MessageBox.Show(ex.Message+"\n"+ex.StackTrace);
+            }
 
-            setAllMob();
+            
             
         }
 
@@ -394,7 +404,7 @@ namespace BPMCodeGen
                                                 {
                                                     string colspStr = rowsp[i].Substring(rowsp[i].Length - 1);
                                                     int tempint = 1;
-                                                    if (!string.IsNullOrEmpty(colspStr) && int.TryParse(colspStr, out tempint))
+                                                    if (!string.IsNullOrEmpty(colspStr) && int.TryParse(colspStr, out tempint)&&tempint>1)
                                                     {
                                                         replaceStr = replaceStr.Replace("colspan=\"1\"", "colspan=\"" + colspStr + "\"");
                                                     }
@@ -447,9 +457,9 @@ namespace BPMCodeGen
             if(!string.IsNullOrEmpty(subSQLsb))
             {
                 subSQLsb = subSQLsb.Substring(0, subSQLsb.Length - 1) + ")";
-                this.sqlTxt.Text = SQLsb.ToString() + subSQLsb;
+                
             }
-            
+            this.sqlTxt.Text = SQLsb.ToString() + subSQLsb??"";
             this.richTextBox1.Text = allStr;
             this.webB1.DocumentText = allStr;
 
@@ -461,7 +471,13 @@ namespace BPMCodeGen
             this.textBox4.Text = allField;
 
             //************************         会追加         暂时保留，可先进行判断************8
-            richTextBox3.Text = richTextBox3.Text.Replace("$[tabName,表名$]:", "$[tabName,表名$]:" + dicParam["tabName"]).Replace(";$[formName,表单应用$]:", ";$[formName,表单应用$]:" + bpmg.NameStr).Replace(";$[formName,流程名$]:", ";$[formName,流程名$]:"+bpmg.NameStr);
+            if (richTextBox3.Text.Contains("$[tabName,表名$]:" + dicParam["tabName"]))
+            { }
+            else
+            {
+                richTextBox3.Text = richTextBox3.Text.Replace("$[tabName,表名$]:", "$[tabName,表名$]:" + dicParam["tabName"]).Replace(";$[formName,表单应用$]:", ";$[formName,表单应用$]:" + bpmg.NameStr).Replace(";$[formName,流程名$]:", ";$[formName,流程名$]:" + bpmg.NameStr);
+            }
+            
             //fs.Flush();
             sr.Close();
             fs.Close();
@@ -565,6 +581,7 @@ namespace BPMCodeGen
                     return TTrow.Replace(subStrSE(TTrow, "$[", "$]", true), mbDic["GLO"]);
 
                 case "Str":
+                case "St1":
 
                     strStrt = mbDic["Str"];
 
@@ -583,7 +600,7 @@ namespace BPMCodeGen
                     break;
 
                 case "Dat":
-
+                case "Da1":
                     strStrt = mbDic["Dat"];
 
                     strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss).Replace("$[id$]", dicParam[subTabstr] + ss);
@@ -602,6 +619,7 @@ namespace BPMCodeGen
 
                     break;
                 case "Txt":
+                case "Tx1":
                     strStrt = mbDic["Txt"];
                     TTrow = mbDic["mt1"];
                     strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss).Replace("$[id$]", dicParam[subTabstr] + ss);
@@ -626,6 +644,7 @@ namespace BPMCodeGen
                         switch(endStrrow)
                         {
                             case "Int":
+                            case "In1":
                                 if (isMain)
                                 {
                                     SQLsb.Append(ss + " int,");
@@ -638,6 +657,7 @@ namespace BPMCodeGen
                                 
                                 break;
                             case "Dec":
+                            case "De1":
                                 if (isMain)
                                 {
                                     SQLsb.Append(ss + " decimal(18,2),");
@@ -776,6 +796,44 @@ namespace BPMCodeGen
                 setAllMob(hist.idInt);
             }
             //MessageBox.Show("aaaaaa");
+        }
+
+
+        private void setAllFile()
+        {
+            if(!string.IsNullOrWhiteSpace(this.textBox2.Text))
+            {
+                FileStream fs = new FileStream(this.textBox2.Text, FileMode.Open);
+                StreamReader sr = new StreamReader(fs, Encoding.Default);
+
+                string allStr = sr.ReadToEnd();
+                int startInt = 0;
+                startInt = allStr.IndexOf("$[", startInt);
+
+                string TestStr = "";
+                while (startInt > 0)
+                {
+                    string subStr = allStr.Substring(startInt, allStr.IndexOf("]", startInt) - startInt + 1);
+                    //allStr= allStr.Replace(subStr,"字段"+startInt);
+                    startInt = allStr.IndexOf("$[", startInt + 1);
+
+                    if (string.IsNullOrEmpty(TestStr))
+                    {
+                        TestStr += subStr + ":\n";
+                    }
+                    else
+                    {
+                        if (!TestStr.Contains(subStr))
+                            TestStr += ";" + subStr + ":\n";
+                    }
+                }
+                this.richTextBox2.Text = TestStr + allStr;
+                this.richTextBox3.Text = TestStr.Trim();
+
+                fs.Flush();
+                sr.Close();
+                fs.Close();
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -997,6 +1055,7 @@ namespace BPMCodeGen
             //fs.Flush();
             sr.Close();
             fs.Close();
+            MessageBox.Show("生成完毕");
         }
 
         private string GenCode(string filePath)
@@ -1107,15 +1166,20 @@ namespace BPMCodeGen
                                             {
                                                 case "Txt":
                                                 case "Str":
+                                                case "Tx1":
+                                                case "St1":
                                                     TempFStr += "item.Attributes.Add(\""+FStrs[i]+"\", Convert.ToString(reader[\""+FStrs[i]+"\"]));\n";
                                                     break;
                                                 case "Int":
+                                                case "In1":
                                                     TempFStr += "item.Attributes.Add(\"" + FStrs[i] + "\", Convert.ToInt32(reader[\"" + FStrs[i] + "\"]));\n";
                                                     break;
                                                 case "Dat":
+                                                case "Da1":
                                                     TempFStr += "item.Attributes.Add(\"" + FStrs[i] + "\", Convert.ToDateTime(reader[\"" + FStrs[i] + "\"]).ToString(\"yyyy-MM-dd\"));\n";
                                                     break;
                                                 case "Dec":
+                                                case "De1":
                                                     TempFStr += "item.Attributes.Add(\"" + FStrs[i] + "\", Convert.ToDecimal(reader[\"" + FStrs[i] + "\"]));\n";
                                                     break;
                                                 default:
@@ -1197,6 +1261,7 @@ namespace BPMCodeGen
             sw.Write(this.richTextBox1.Text);
             sw.Flush();
             sw.Close();
+            MessageBox.Show("aspx成功");
 
             currDir = System.Environment.CurrentDirectory + "/codes/" + "/" + dicParam["tabName"] + "/Modules/";
             if (!Directory.Exists(currDir))
@@ -1207,6 +1272,7 @@ namespace BPMCodeGen
             sw.Write(GenCode(this.textBox2.Text));
             sw.Flush();
             sw.Close();
+            MessageBox.Show("Modules成功");
 
             currDir = System.Environment.CurrentDirectory + "/codes/" + "/" + dicParam["tabName"] + "/StoreDataService/";
             if (!Directory.Exists(currDir))
@@ -1217,6 +1283,7 @@ namespace BPMCodeGen
             sw.Write(GenCode(this.textBox5.Text));
             sw.Flush();
             sw.Close();
+            MessageBox.Show("StoreDataService成功");
 
             currDir = System.Environment.CurrentDirectory + "/codes/" + "/" + dicParam["tabName"] + "/RFC/";
             if (!Directory.Exists(currDir))
