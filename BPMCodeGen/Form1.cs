@@ -583,7 +583,7 @@ namespace BPMCodeGen
                 case "Str":
                 case "St1":
 
-                    strStrt = mbDic["Str"];
+                    strStrt = mbDic[endStrrow];
 
                     strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss).Replace("$[id$]", dicParam[subTabstr] + ss);
                     //replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), strStrt);
@@ -601,7 +601,7 @@ namespace BPMCodeGen
 
                 case "Dat":
                 case "Da1":
-                    strStrt = mbDic["Dat"];
+                    strStrt = mbDic[endStrrow];
 
                     strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss).Replace("$[id$]", dicParam[subTabstr] + ss);
                     //replaceStr = replaceStr.Replace(subStrSE(replaceStr, "$[", "$]", true), strStrt);
@@ -620,7 +620,7 @@ namespace BPMCodeGen
                     break;
                 case "Txt":
                 case "Tx1":
-                    strStrt = mbDic["Txt"];
+                    strStrt = mbDic[endStrrow];
                     TTrow = mbDic["mt1"];
                     strStrt = strStrt.Replace("$[$]", dicParam[subTabstr] + "." + ss).Replace("$[id$]", dicParam[subTabstr] + ss);
                     if (isMain)
