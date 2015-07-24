@@ -1161,7 +1161,7 @@ namespace BPMCodeGen
                                     {
                                         for (int i = 0; i < FStrs.Count(); i++)
                                         {
-                                            string endStr = FStrs[i].Substring(FStrs.Length - 3);
+                                            string endStr = FStrs[i].Substring(FStrs[i].Length - 3);
                                             switch(endStr)
                                             {
                                                 case "Txt":
