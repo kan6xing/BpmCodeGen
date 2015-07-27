@@ -669,6 +669,18 @@ namespace BPMCodeGen
                                 }
                                 
                                 break;
+
+                            default:
+                                if (isMain)
+                                {
+                                    SQLsb.Append(ss + " nvarchar(MAX),");
+                                    alist.Add(ss);
+                                }
+                                else
+                                {
+                                    subSQLsb += ss + " nvarchar(MAX),";
+                                }
+                                break;
                         }
                         return TTrow.Replace(subStrSE(TTrow, "$[", "$]", true), strStrt);
                     }
