@@ -200,6 +200,10 @@ namespace BPMCodeGen
                 foreach (string str in strs)
                 {
                     string[] props = str.Split(':');
+                    if(props.Length>1)
+                    {
+                        props[1] = props[1].Trim().Trim('\n');
+                    }
                     if (subStr.Contains(props[0].Trim().Trim('\n')))
                     {
 
@@ -983,6 +987,10 @@ namespace BPMCodeGen
                 foreach (string str in strs)
                 {
                     string[] props = str.Split(':');
+                    if (props.Length > 1)
+                    {
+                        props[1] = props[1].Trim().Trim('\n');
+                    }
                     if (subStr.Contains(props[0].Trim().Trim('\n')))
                     {
 
@@ -1089,6 +1097,10 @@ namespace BPMCodeGen
                 foreach (string str in strs)
                 {
                     string[] props = str.Split(':');
+                    if (props.Length > 1)
+                    {
+                        props[1] = props[1].Trim().Trim('\n');
+                    }
                     if (subStr.Contains(props[0].Trim().Trim('\n')))
                     {
                       
